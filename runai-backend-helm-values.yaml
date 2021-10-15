@@ -1,0 +1,143 @@
+pspEnabled: false
+openshift: false
+deployment:
+  env: development
+  installation: "local"
+  allowHttp: true
+  servicePort: 7000
+  domain: backend.run.ai
+  docker:
+    repository: gcr.io/run-ai-prod
+    image: runai-backend
+    tag: 3185cd9
+backend:
+  https:
+    enabled: true
+    key: <OUTPUT OF "cat key.pem | base64 -w0 (b0 on mac)">
+    crt: <OUTPUT OF "cat cert.pem | base64 -w0 (b0 on mac)">
+  isAirgapped: true
+  privateRegistryAddress: <DOCKER_REGISTRY>
+  initTenant: |
+    name: runai
+    admin:
+        email: admin@run.ai
+        password: admin
+    users:
+    - email: test@run.ai
+      password: password
+    grafanaPages:
+        promProxy: http://runai-backend-thanos-query.runai-backend.svc:9090
+        nowDashboard: https://backend.run.ai/grafana/d/AdfaNfHZk?kiosk&refresh=5s&theme=light
+        loginPage: https://backend.run.ai/grafana/login/generic_oauth
+        logoutPage: https://backend.run.ai/grafana/logout
+        longTermDashboard: https://backend.run.ai/grafana/d/wbFdlkDWk?kiosk=tv&theme=light
+        clustersDashboard: https://backend.run.ai/grafana/d/Xwvf_KQWz?kiosk&theme=light
+  replicaCount: 1
+  port: 7000
+  memory:
+    size: 1G
+    swap: 2G
+  secret:
+    jwtSecret: jwt_secret
+    sessionSecret: session_secret
+  db:
+    schema: backend
+    migrations:
+      docker:
+        repository: gcr.io/run-ai-prod
+        image: new-migrations
+        tag: 266-ca62cf4
+  tenant:
+    name: runai
+    authClientID: runai
+nginx-ingress:
+  enabled: true
+  podSecurityPolicy:
+    enabled: false
+  controller:
+    service:
+      externalIPs:
+        - "RUNAI_IP_ADDRERSS"
+    image:
+      registry: "us.gcr.io"
+      repository: "k8s-artifacts-prod/ingress-nginx/controller"
+  defaultBackend:
+    image:
+      repository: "k8s.gcr.io/defaultbackend-amd64"
+postgresql:
+  enabled: true
+  serviceAccount:
+    enabled: true
+  image:
+    registry: docker.io
+    repository: bitnami/postgresql
+  postgresqlUsername: user
+  postgresqlPassword: password
+  postgresqlPostgresPassword: password
+  postgresqlDatabase: "backend"
+  initScriptTemplate: |-
+    CREATE USER {{.Values.global.grafana.dbUser}} WITH PASSWORD '{{.Values.global.grafana.dbPassword}}';
+    CREATE SCHEMA grafana authorization {{.Values.global.grafana.dbUser}};
+    ALTER USER {{.Values.global.grafana.dbUser}} set search_path='grafana';
+  persistence:
+    enabled: true
+    storageClassName: ""
+    nfs:
+      enabled: true
+      server: "PLEASE-REPLACE-WITH-NFS-URL"
+      path: "PLEASE-REPLACE-WITH-NFS-PATH"
+global:
+  grafana:
+    dbUser: grafana
+    dbPassword: password
+  db:
+    user: user
+    password: password
+    dbName: backend
+keycloak:
+  enabled: true
+  serviceAccount:
+    create: true
+    imagePullSecrets:
+    - name: gcr-secret
+  image:
+    repository: gcr.io/run-ai-prod/keycloak
+    tag: 3185cd9
+  initContainer:
+    image:
+      repository: gcr.io/run-ai-prod/keycloak-init
+      tag: 3185cd9
+grafana:
+  enabled: true
+  image:
+    repository: grafana/grafana
+  datasources:
+    datasources.yaml:
+      datasources:
+        - access: proxy
+          editable: true
+          isDefault: true
+          jsonData:
+            timeInterval: 5s
+          name: Prometheus
+          type: prometheus
+          url: "http://runai-backend-thanos-query.runai-backend.svc:9090"
+  grafana.ini:
+    server:
+      domain: backend.run.ai
+      root_url: 'https://%(domain)s/grafana'
+    auth.generic_oauth:
+      auth_url: 'https://backend.run.ai/auth/realms/runai/protocol/openid-connect/auth'
+
+installDashboards: true
+
+thanos:
+  enabled: true
+  receive:
+    persistence:
+      enabled: true
+      storageClassName: ""
+      nfs:
+        enabled: true
+        server: "PLEASE-REPLACE-WITH-NFS-URL"
+        path: "PLEASE-REPLACE-WITH-NFS-PATH"
