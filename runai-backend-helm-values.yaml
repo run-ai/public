@@ -46,7 +46,7 @@ backend:
       docker:
         repository: gcr.io/run-ai-prod
         image: new-migrations
-        tag: 266-ca62cf4
+        tag: 292-18d6fa8
   tenant:
     name: runai
     authClientID: runai
