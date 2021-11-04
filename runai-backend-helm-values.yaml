@@ -9,7 +9,7 @@ deployment:
   docker:
     repository: gcr.io/run-ai-prod
     image: runai-backend
-    tag: 3e87825
+    tag: a1460e2
 backend:
   https:
     enabled: true
@@ -102,11 +102,11 @@ keycloak:
     - name: gcr-secret
   image:
     repository: gcr.io/run-ai-prod/keycloak
-    tag: 3e87825
+    tag: a1460e2
   initContainer:
     image:
       repository: gcr.io/run-ai-prod/keycloak-init
-      tag: 3e87825
+      tag: a1460e2
 grafana:
   enabled: true
   image:
