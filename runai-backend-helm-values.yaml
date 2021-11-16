@@ -96,11 +96,11 @@ keycloak:
     - name: gcr-secret
   image:
     repository: gcr.io/run-ai-prod/keycloak
-    tag: 26abfd0
+    tag: e0a1c46
   initContainer:
     image:
       repository: gcr.io/run-ai-prod/keycloak-init
-      tag: 26abfd0
+      tag: e0a1c46
 grafana:
   enabled: true
   image:
