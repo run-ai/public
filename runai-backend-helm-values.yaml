@@ -80,6 +80,8 @@ postgresql:
       enabled: true
       server: "PLEASE-REPLACE-WITH-NFS-URL"
       path: "PLEASE-REPLACE-WITH-NFS-PATH"
+  volumePermissions:
+    enabled: false
 global:
   grafana:
     dbUser: grafana
@@ -96,11 +98,11 @@ keycloak:
     - name: gcr-secret
   image:
     repository: gcr.io/run-ai-prod/keycloak
-    tag: 97fd913
+    tag: 74cc3d9
   initContainer:
     image:
       repository: gcr.io/run-ai-prod/keycloak-init
-      tag: 97fd913
+      tag: 74cc3d9
 grafana:
   enabled: true
   image:
