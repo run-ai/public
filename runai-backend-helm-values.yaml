@@ -41,6 +41,9 @@ backend:
     sessionSecret: session_secret
   db:
     schema: backend
+    migrations:
+      docker:
+        repository: gcr.io/run-ai-prod
   tenant:
     name: runai
     authClientID: runai
@@ -98,11 +101,11 @@ keycloak:
     - name: gcr-secret
   image:
     repository: gcr.io/run-ai-prod/keycloak
-    tag: 4aff57e
+    tag: e0b15c0
   initContainer:
     image:
       repository: gcr.io/run-ai-prod/keycloak-init
-      tag: 4aff57e
+      tag: e0b15c0
 grafana:
   enabled: true
   image:
