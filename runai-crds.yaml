@@ -210,7 +210,7 @@ spec:
     plural: queues
   scope: Cluster
   versions:
-    - name: v2
+    - name: v1
       served: true
       storage: true
       schema:
