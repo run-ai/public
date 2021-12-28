@@ -74,7 +74,7 @@ spec:
                   format: float
                   type: number
                 gpuOverQuotaWeight:
-                  format: int32
+                  format: float
                   type: number
                 maxAllowedGpus:
                   format: float
@@ -142,9 +142,6 @@ spec:
               properties:
                 deservedGpus:
                   format: float
-                  type: number
-                gpuOverQuotaWeight:
-                  format: int32
                   type: number
                 maxAllowedGpus:
                   format: float
@@ -230,7 +227,7 @@ spec:
                   format: float
                   type: number
                 gpuOverQuotaWeight:
-                  format: int32
+                  format: float
                   type: number
                 maxAllowedGpus:
                   format: float
