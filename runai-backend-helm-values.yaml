@@ -56,8 +56,7 @@ nginx-ingress:
       externalIPs:
         - "RUNAI_IP_ADDRERSS"
     image:
-      registry: "k8s.gcr.io"
-      repository: "ingress-nginx/controller"
+      repository: "k8s.gcr.io/ingress-nginx/controller"
   defaultBackend:
     image:
       repository: "k8s.gcr.io/defaultbackend-amd64"
