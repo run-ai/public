@@ -56,7 +56,8 @@ nginx-ingress:
       externalIPs:
         - "RUNAI_IP_ADDRERSS"
     image:
-      repository: "k8s.gcr.io/ingress-nginx/controller"
+      registry: "us.gcr.io"
+      repository: "k8s-artifacts-prod/ingress-nginx/controller"
   defaultBackend:
     image:
       repository: "k8s.gcr.io/defaultbackend-amd64"
@@ -139,4 +140,3 @@ thanos:
         enabled: true
         server: "PLEASE-REPLACE-WITH-NFS-URL"
         path: "PLEASE-REPLACE-WITH-NFS-PATH"
-
