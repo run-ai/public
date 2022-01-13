@@ -47,6 +47,15 @@ backend:
   tenant:
     name: runai
     authClientID: runai
+  openshiftIdp:
+    enabled: true
+    baseUrl: <OPENSHIFT_BASE_URL>:6443
+    secret: "<IDP_SECRET>"
+    firstAdmin: "ADMIN_USER"
+    ocpIdpInit:
+      repository: gcr.io/run-ai-prod
+      image: ocp-idp-init
+      tag: 1.0.2
 nginx-ingress:
   enabled: true
   podSecurityPolicy:
@@ -100,11 +109,11 @@ keycloak:
     - name: gcr-secret
   image:
     repository: gcr.io/run-ai-prod/keycloak
-    tag: e0b15c0
+    tag: e306c74
   initContainer:
     image:
       repository: gcr.io/run-ai-prod/keycloak-init
-      tag: e0b15c0
+      tag: e306c74
 grafana:
   enabled: true
   image:
@@ -139,3 +148,4 @@ thanos:
         enabled: true
         server: "PLEASE-REPLACE-WITH-NFS-URL"
         path: "PLEASE-REPLACE-WITH-NFS-PATH"
+
