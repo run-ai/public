@@ -48,7 +48,7 @@ backend:
     name: runai
     authClientID: runai
   openshiftIdp:
-    enabled: true
+    enabled: false
     baseUrl: <OPENSHIFT_BASE_URL>:6443
     secret: "<IDP_SECRET>"
     firstAdmin: "ADMIN_USER"
@@ -109,11 +109,11 @@ keycloak:
     - name: gcr-secret
   image:
     repository: gcr.io/run-ai-prod/keycloak
-    tag: e306c74
+    tag: 46f4d86
   initContainer:
     image:
       repository: gcr.io/run-ai-prod/keycloak-init
-      tag: e306c74
+      tag: 46f4d86
 grafana:
   enabled: true
   image:
