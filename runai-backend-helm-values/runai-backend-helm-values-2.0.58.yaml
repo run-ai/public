@@ -64,6 +64,7 @@ nginx-ingress:
     service:
       externalIPs:
         - "RUNAI_IP_ADDRERSS"
+        - "RUNAI_IP_ADDRERSS"
     image:
       repository: "k8s.gcr.io/ingress-nginx/controller"
   defaultBackend:
@@ -109,11 +110,11 @@ keycloak:
     - name: gcr-secret
   image:
     repository: gcr.io/run-ai-prod/keycloak
-    tag: 559761f
+    tag: 593f703
   initContainer:
     image:
       repository: gcr.io/run-ai-prod/keycloak-init
-      tag: 559761f
+      tag: 593f703
 grafana:
   enabled: true
   image:
