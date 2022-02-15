@@ -110,11 +110,11 @@ keycloak:
     - name: gcr-secret
   image:
     repository: gcr.io/run-ai-prod/keycloak
-    tag: 2cb380e
+    tag: 01b539f
   initContainer:
     image:
       repository: gcr.io/run-ai-prod/keycloak-init
-      tag: 2cb380e
+      tag: 01b539f
 grafana:
   enabled: true
   image:
