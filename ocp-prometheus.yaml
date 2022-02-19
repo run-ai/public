@@ -124,6 +124,8 @@ spec:
         (label_replace(label_replace(sum(rate(container_cpu_usage_seconds_total{ container!=""}[1m])) by (pod, namespace),"pod_name" , "$1", "pod", "(.*)"), "pod_namespace" , "$1", "namespace", "(.*)")
         * on(pod_name, pod_namespace) group_left(pod_group_name, pod_group_uuid) (runai_pod_phase_with_info{phase="Running"} ==1))
       record: runai_job_cpu_usage
+    - expr: rate(container_cpu_usage_seconds_total{container=""}[1m]) * on (pod, namespace) group_left(gpu, gpu_index, workload_name, workload_type) label_replace(label_replace(runai_pod_phase_with_info{phase="Running"} == 1, "pod" , "$1", "pod_name", "(.*)"), "namespace", "$1", "pod_namespace", "(.*)")
+      record: runai_pod_cpu_usage
     # CPU Memory utilization
     - expr: instance:node_memory_utilisation:ratio * on (pod, namespace) group_left(node) (kube_pod_info *0+1)
       record: runai_node_memory_utilization
@@ -135,6 +137,8 @@ spec:
       record: runai_memory_used_bytes
     - expr: sum(label_replace(label_replace(sum(container_memory_usage_bytes{ container!=""}) by (pod, namespace),"pod_name" , "$1", "pod", "(.*)"), "pod_namespace" , "$1", "namespace", "(.*)") * on(pod_namespace, pod_name) group_left(pod_group_name, pod_group_uuid) (runai_pod_info * 0 + 1)) by (pod_group_name, pod_group_uuid)
       record: runai_job_memory_used_bytes
+    - expr: container_memory_usage_bytes{container=""} * on (pod, namespace) group_left(gpu, gpu_index, workload_name, workload_type) label_replace(label_replace(runai_pod_phase_with_info{phase="Running"} == 1, "pod" , "$1", "pod_name", "(.*)"), "namespace", "$1", "pod_namespace", "(.*)")
+      record: runai_pod_memory_used_bytes
     - expr: max(max( label_replace(label_replace(kube_pod_container_info ,"pod_name" , "$1", "pod", "(.*)"), "pod_namespace" , "$1", "namespace", "(.*)")) by (pod_name, pod_namespace, image) * on(pod_name, pod_namespace) group_left(pod_group_name, pod_group_uuid) (runai_pod_info * 0 + 1) ) by (image, pod_group_name, pod_group_uuid )
       record: runai_pod_group_image
     # CPU Memory requested - note: job can be allocated but pending(ErrorImagePull)
