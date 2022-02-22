@@ -56,6 +56,12 @@ backend:
       repository: gcr.io/run-ai-prod
       image: ocp-idp-init
       tag: 1.0.2
+  initKcRealm:
+    image:
+      name: init-runai-kc-realm
+      repository: gcr.io/run-ai-prod
+      tag: 0.0.2
+    grafanaLoginUrl: https://backend.run.ai/grafana/login/generic_oauth
 nginx-ingress:
   enabled: true
   podSecurityPolicy:
