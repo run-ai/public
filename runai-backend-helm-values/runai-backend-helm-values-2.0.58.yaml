@@ -114,13 +114,6 @@ keycloak:
     create: true
     imagePullSecrets:
     - name: gcr-secret
-  image:
-    repository: gcr.io/run-ai-prod/keycloak
-    tag: 01b539f
-  initContainer:
-    image:
-      repository: gcr.io/run-ai-prod/keycloak-init
-      tag: 01b539f
 grafana:
   enabled: true
   image:
