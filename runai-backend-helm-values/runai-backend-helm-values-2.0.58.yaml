@@ -48,6 +48,8 @@ backend:
     name: runai
     authClientID: runai
   initKcRealm:
+    image:
+      repository: gcr.io/run-ai-prod
     grafanaLoginUrl: https://backend.run.ai/grafana/login/generic_oauth
   openshiftIdp:
     enabled: false
