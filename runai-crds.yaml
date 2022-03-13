@@ -108,13 +108,6 @@ spec:
                 resources:
                   type: object
                   properties:
-                    limits:
-                      type: object
-                      properties:
-                        cpu:
-                          x-kubernetes-int-or-string: true
-                        memory:
-                          x-kubernetes-int-or-string: true
                     requests:
                       type: object
                       properties:
@@ -167,13 +160,6 @@ spec:
                 resources:
                   type: object
                   properties:
-                    limits:
-                      type: object
-                      properties:
-                        cpu:
-                          x-kubernetes-int-or-string: true
-                        memory:
-                          x-kubernetes-int-or-string: true
                     requests:
                       type: object
                       properties:
@@ -287,13 +273,6 @@ spec:
                 resources:
                   type: object
                   properties:
-                    limits:
-                      type: object
-                      properties:
-                        cpu:
-                          x-kubernetes-int-or-string: true
-                        memory:
-                          x-kubernetes-int-or-string: true
                     requests:
                       type: object
                       properties:
