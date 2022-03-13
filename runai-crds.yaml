@@ -284,6 +284,23 @@ spec:
                   type: boolean
                 useOnlyFreeCPUResources:
                   type: boolean
+                resources:
+                  type: object
+                  properties:
+                    limits:
+                      type: object
+                      properties:
+                        cpu:
+                          x-kubernetes-int-or-string: true
+                        memory:
+                          x-kubernetes-int-or-string: true
+                    requests:
+                      type: object
+                      properties:
+                        cpu:
+                          x-kubernetes-int-or-string: true
+                        memory:
+                          x-kubernetes-int-or-string: true
               type: object
           type: object
 ---
