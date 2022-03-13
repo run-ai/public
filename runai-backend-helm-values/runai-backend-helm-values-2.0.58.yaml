@@ -47,10 +47,6 @@ backend:
   tenant:
     name: runai
     authClientID: runai
-  initKcRealm:
-    image:
-      repository: gcr.io/run-ai-prod
-    grafanaLoginUrl: https://backend.run.ai/grafana/login/generic_oauth
   openshiftIdp:
     enabled: false
     baseUrl: <OPENSHIFT_BASE_URL>:6443
@@ -114,11 +110,11 @@ keycloak:
     - name: gcr-secret
   image:
     repository: gcr.io/run-ai-prod/keycloak
-    tag: 36518a9
+    tag: 08aa91f
   initContainer:
     image:
       repository: gcr.io/run-ai-prod/keycloak-init
-      tag: 36518a9
+      tag: 08aa91f
 grafana:
   enabled: true
   image:
