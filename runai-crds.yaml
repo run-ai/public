@@ -55,7 +55,7 @@ spec:
   versions:
     - name: v1
       served: true
-      storage: true
+      storage: false
       schema:
         openAPIV3Schema:
           x-kubernetes-preserve-unknown-fields: true
@@ -105,17 +105,76 @@ spec:
                   type: array
                 swapEnabled:
                   type: boolean
+              type: object
+          type: object
+    - name: v2
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          x-kubernetes-preserve-unknown-fields: true
+          properties:
+            apiVersion:
+              type: string
+            kind:
+              type: string
+            metadata:
+              type: object
+            spec:
+              properties:
+                department:
+                  type: string
+                permissions:
+                  type: object
+                  properties:
+                    users:
+                      items:
+                        type: string
+                      type: array
+                    groups:
+                      items:
+                        type: string
+                      type: array
+                interactiveJobTimeLimitSecs:
+                  format: int64
+                  type: integer
+                nodeAffinityInteractive:
+                  items:
+                    type:
+                      string
+                  type: array
+                nodeAffinityTrain:
+                  items:
+                    type:
+                      string
+                  type: array
+                swapEnabled:
+                  type: boolean
                 resources:
                   type: object
                   properties:
-                    requests:
+                    gpu:
                       type: object
                       properties:
-                        cpu:
+                        deserved:
+                          format: float
+                          type: number
+                        gpuOverQuotaWeight:
+                          format: float
+                          type: number
+                        limit:
+                          format: float
+                          type: number
+                    cpu:
+                      type: object
+                      properties:
+                        deserved:
                           x-kubernetes-int-or-string: true
-                        memory:
+                    memory:
+                      type: object
+                      properties:
+                        deserved:
                           x-kubernetes-int-or-string: true
-
               type: object
           type: object
   scope: Cluster
@@ -139,7 +198,7 @@ spec:
   versions:
     - name: v1
       served: true
-      storage: true
+      storage: false
       schema:
         openAPIV3Schema:
           properties:
@@ -157,15 +216,46 @@ spec:
                 maxAllowedGpus:
                   format: float
                   type: number
+              type: object
+          type: object
+    - name: v2
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          properties:
+            apiVersion:
+              type: string
+            kind:
+              type: string
+            metadata:
+              type: object
+            spec:
+              properties:
                 resources:
                   type: object
                   properties:
-                    requests:
+                    gpu:
                       type: object
                       properties:
-                        cpu:
+                        deserved:
+                          format: float
+                          type: number
+                        gpuOverQuotaWeight:
+                          format: float
+                          type: number
+                        limit:
+                          format: float
+                          type: number
+                    cpu:
+                      type: object
+                      properties:
+                        deserved:
                           x-kubernetes-int-or-string: true
-                        memory:
+                    memory:
+                      type: object
+                      properties:
+                        deserved:
                           x-kubernetes-int-or-string: true
               type: object
           type: object
@@ -230,7 +320,7 @@ spec:
   versions:
     - name: v1
       served: true
-      storage: true
+      storage: false
       schema:
         openAPIV3Schema:
           properties:
@@ -270,15 +360,65 @@ spec:
                   type: boolean
                 useOnlyFreeCPUResources:
                   type: boolean
+              type: object
+          type: object
+    - name: v2
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          properties:
+            apiVersion:
+              type: string
+            kind:
+              type: string
+            metadata:
+              type: object
+            spec:
+              properties:
+                department:
+                  type: string
+                interactiveJobTimeLimitSecs:
+                  format: int64
+                  type: integer
+                nodeAffinityInteractive:
+                  items:
+                    type:
+                      string
+                  type: array
+                nodeAffinityTrain:
+                  items:
+                    type:
+                      string
+                  type: array
+                swapEnabled:
+                  type: boolean
+                useOnlyFreeCPUResources:
+                  type: boolean
                 resources:
                   type: object
                   properties:
-                    requests:
+                    gpu:
                       type: object
                       properties:
-                        cpu:
+                        deserved:
+                          format: float
+                          type: number
+                        gpuOverQuotaWeight:
+                          format: float
+                          type: number
+                        limit:
+                          format: float
+                          type: number
+                    cpu:
+                      type: object
+                      properties:
+                        deserved:
                           x-kubernetes-int-or-string: true
-                        memory:
+                    memory:
+                      type: object
+                      properties:
+                        deserved:
                           x-kubernetes-int-or-string: true
               type: object
           type: object
