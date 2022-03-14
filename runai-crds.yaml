@@ -251,6 +251,7 @@ spec:
                   type: boolean
               type: object
           type: object
+
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -4553,6 +4554,19 @@ spec:
           status:
             description: ' The observed state of this InteractiveWorkload'
             properties:
+              createdResources:
+                items:
+                  properties:
+                    apiVersion:
+                      type: string
+                    kind:
+                      type: string
+                    name:
+                      type: string
+                    namespace:
+                      type: string
+                  type: object
+                type: array
               creationStatus:
                 enum:
                 - Created
@@ -11221,6 +11235,19 @@ spec:
           status:
             description: ' The observed state of this TrainingWorkload'
             properties:
+              createdResources:
+                items:
+                  properties:
+                    apiVersion:
+                      type: string
+                    kind:
+                      type: string
+                    name:
+                      type: string
+                    namespace:
+                      type: string
+                  type: object
+                type: array
               creationStatus:
                 enum:
                 - Created
@@ -17840,6 +17867,19 @@ spec:
           status:
             description: ' The observed state of this DeploymentWorkload'
             properties:
+              createdResources:
+                items:
+                  properties:
+                    apiVersion:
+                      type: string
+                    kind:
+                      type: string
+                    name:
+                      type: string
+                    namespace:
+                      type: string
+                  type: object
+                type: array
               creationStatus:
                 enum:
                 - Created
