@@ -59,7 +59,7 @@ backend:
     ocpIdpInit:
       repository: gcr.io/run-ai-prod
       image: ocp-idp-init
-      tag: 1.0.3
+      tag: 1.1.0
 nginx-ingress:
   enabled: true
   podSecurityPolicy:
@@ -114,11 +114,11 @@ keycloak:
     - name: gcr-secret
   image:
     repository: gcr.io/run-ai-prod/keycloak
-    tag: bdfa542
+    tag: 1f8c722
   initContainer:
     image:
       repository: gcr.io/run-ai-prod/keycloak-init
-      tag: bdfa542
+      tag: 1f8c722
 grafana:
   enabled: true
   image:
