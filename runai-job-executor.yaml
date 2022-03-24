@@ -68,6 +68,9 @@ rules:
   - run.ai
   resources:
   - runaijobs
+  - interactiveworkloads
+  - trainingworkloads
+  - deploymentworkloads
   verbs:
   - create
   - update
