@@ -26411,6 +26411,8 @@ spec:
           x-kubernetes-preserve-unknown-fields: true
       subresources:
           status: {}
+
+
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
