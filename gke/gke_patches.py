@@ -1,5 +1,6 @@
 import os
 import sys
+import json
 import subprocess
 
 
@@ -35,73 +36,90 @@ def exec_string_command(string_command):
     output = subprocess.run(string_command, stdout=subprocess.PIPE, shell=True)
     return str(output.stdout, 'utf-8') if output is not None else ""
 
-def apply_yaml(yaml_content):
-    yaml_filepath = '/tmp/yaml_to_deploy.yaml'
-    write_to_file(yaml_content, yaml_filepath)
+def apply_json(json_content):
+    json_filepath = '/tmp/json_to_deploy.json'
+    write_to_file(json.dumps(json_content), json_filepath)
 
-    apply_yaml_command = 'kubectl apply -f {}'.format(yaml_filepath)
-    exec_command(apply_yaml_command)
+    apply_json_command = 'kubectl apply -f {}'.format(json_filepath)
+    exec_command(apply_json_command)
 
-    os.remove(yaml_filepath)
+    os.remove(json_filepath)
 
-def add_nvidia_volumes(gfd_yaml_line):
-    if 'volumeMounts:' in gfd_yaml_line:
-        debug_print('Adding nvidia volume mount')
-        return gfd_yaml_line + NVIDIA_VOLUME_MOUNT
-    elif 'volumes:' in gfd_yaml_line:
-        debug_print('Adding nvidia volume')
-        return gfd_yaml_line + NVIDIA_VOLUME
-    return gfd_yaml_line
+def add_nvidia_volumes(ds_json):
+    debug_print('Adding nvidia volume to ds')
+
+    volumes = ds_json['spec']['template']['spec'].get('volumes')
+    if not volumes:
+        ds_json['spec']['template']['spec']['volumes'] = []
+
+    volumeMounts = ds_json['spec']['template']['spec']['containers'][0].get('volumeMounts')
+    if not volumeMounts:
+        ds_json['spec']['template']['spec']['containers'][0]['volumeMounts'] = []
+
+    nvidia_volume = {'hostPath': {'path': '/home/kubernetes/bin/nvidia', 'type': 'Directory'}, 'name': 'nvidia-volume'}
+    nvidia_volume_mount = {'mountPath': '/usr/local/nvidia', 'name': 'nvidia-volume'}
+
+    ds_json['spec']['template']['spec']['volumes'].append(nvidia_volume)
+    ds_json['spec']['template']['spec']['containers'][0]['volumeMounts'].append(nvidia_volume_mount)
+
+def add_nvidia_volumes_if_needed(ds_json):
+    is_nvidia_volume_found = False
+    volumes = ds_json['spec']['template']['spec'].get('volumes')
+    if volumes:
+        for volume in volumes:
+            if volume['hostPath']['path'] == '/home/kubernetes/bin/nvidia':
+                is_nvidia_volume_found = True
+                break
+
+    if is_nvidia_volume_found:
+        debug_print('Nvidia volume already found in ds')
+        return
+
+    add_nvidia_volumes(ds_json)
 
 ################ gpu-feature-discovery ################
-def remove_priority_class(gfd_yaml_line):
-    if 'priorityClassName' in gfd_yaml_line:
-        debug_print('Removing priorityClassName from gpu-feature-discovery')
-        return "      priorityClassName: null"
-    return gfd_yaml_line
+def remove_priority_class(gfd_json):
+    priorityClass = gfd_json['spec']['template']['spec']['containers'][0].get('priorityClassName')
+    if not priorityClass:
+        return
 
-def get_gfd_yaml():
-    debug_print('Getting gpu-feature-discovery yaml')
-    get_gfd_yaml_command = 'kubectl get ds runai-cluster-gpu-feature-discovery -n node-feature-discovery -oyaml'
-    return exec_command(get_gfd_yaml_command)
+    debug_print('Removing priorityClassName from gpu-feature-discovery')
+    gfd_json['spec']['template']['spec']['containers'][0]['priorityClassName'] = "null"
 
-def edit_gfd_yaml(gfd_yaml):
-    edited_gfd = ''
-    for line in gfd_yaml.splitlines():
-        edited_line = remove_priority_class(line)
-        edited_line = add_nvidia_volumes(edited_line)
-        edited_gfd += edited_line + '\n'
+def get_gfd_json():
+    debug_print('Getting gpu-feature-discovery json')
+    get_gfd_json_command = 'kubectl get ds runai-cluster-gpu-feature-discovery -n node-feature-discovery -ojson'
+    json_output = exec_command(get_gfd_json_command)
+    return json.loads(json_output)
 
-    return edited_gfd
+def edit_gfd_json(gfd_json):
+    add_nvidia_volumes_if_needed(gfd_json)
+    remove_priority_class(gfd_json)
 
 def edit_gfd():
-    gfd_yaml = get_gfd_yaml()
-    gfd_yaml = edit_gfd_yaml(gfd_yaml)
+    gfd_json = get_gfd_json()
+    edit_gfd_json(gfd_json)
     debug_print('Applying edited gpu-feature-discovery')
-    apply_yaml(gfd_yaml)
+    apply_json(gfd_json)
 
 ################ dcgm-exporter ################
 def get_dcgm_exporter_namespace_from_args():
     return sys.argv[1] if len(sys.argv) > 1 else DCGM_EXPORTER_NAMESPACE
 
-def get_dcgm_exporter_yaml(dcgm_exporter_namespace):
-    debug_print('Getting dcgm-exporter yaml')
-    get_dcgm_exporter_yaml_command = 'kubectl get ds dcgm-exporter -n {} -oyaml'.format(dcgm_exporter_namespace)
-    return exec_command(get_dcgm_exporter_yaml_command)
+def get_dcgm_exporter_json(dcgm_exporter_namespace):
+    debug_print('Getting dcgm-exporter json')
+    get_dcgm_exporter_json_command = 'kubectl get ds dcgm-exporter -n {} -ojson'.format(dcgm_exporter_namespace)
+    json_output = exec_command(get_dcgm_exporter_json_command)
+    return json.loads(json_output)
 
-def edit_dcgm_exporter_yaml(dcgm_exporter_yaml):
-    edited_dcgm_exporter = ''
-    for line in dcgm_exporter_yaml.splitlines():
-        edited_line = add_nvidia_volumes(line)
-        edited_dcgm_exporter += edited_line + '\n'
-
-    return edited_dcgm_exporter
+def edit_dcgm_exporter_json(dcgm_exporter_json):
+    add_nvidia_volumes_if_needed(dcgm_exporter_json)
 
 def edit_dcgm_exporter(dcgm_exporter_namespace):
-    dcgm_exporter_yaml = get_dcgm_exporter_yaml(dcgm_exporter_namespace)
-    dcgm_exporter_yaml = edit_dcgm_exporter_yaml(dcgm_exporter_yaml)
+    dcgm_exporter_json = get_dcgm_exporter_json(dcgm_exporter_namespace)
+    edit_dcgm_exporter_json(dcgm_exporter_json)
     debug_print('Applying edited dcgm-exporter')
-    apply_yaml(dcgm_exporter_yaml)
+    apply_json(dcgm_exporter_json)
 
 ################ dcgm-exporter ################
 def patch_runaiconfig(dcgm_exporter_namespace):
