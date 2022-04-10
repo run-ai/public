@@ -67,12 +67,12 @@ def add_nvidia_volumes_if_needed(ds_json):
 
 ################ gpu-feature-discovery ################
 def remove_priority_class(gfd_json):
-    priorityClass = gfd_json['spec']['template']['spec']['containers'][0].get('priorityClassName')
+    priorityClass = gfd_json['spec']['template']['spec'].get('priorityClassName')
     if not priorityClass:
         return
 
     debug_print('Removing priorityClassName from gpu-feature-discovery')
-    gfd_json['spec']['template']['spec']['containers'][0]['priorityClassName'] = "null"
+    gfd_json['spec']['template']['spec']['priorityClassName'] = None
 
 def get_gfd_json():
     debug_print('Getting gpu-feature-discovery json')
