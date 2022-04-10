@@ -4,19 +4,7 @@ import json
 import subprocess
 
 
-DCGM_EXPORTER_NAMESPACE = 'runai'
 DEBUG = True
-
-NVIDIA_VOLUME = '''
-      - hostPath:
-          path: /home/kubernetes/bin/nvidia
-          type: Directory
-        name: nvidia
-'''
-NVIDIA_VOLUME_MOUNT = '''
-        - mountPath: /usr/local/nvidia
-          name: nvidia
-'''
 
 
 ################ General Functions ################
@@ -104,7 +92,9 @@ def edit_gfd():
 
 ################ dcgm-exporter ################
 def get_dcgm_exporter_namespace_from_args():
-    return sys.argv[1] if len(sys.argv) > 1 else DCGM_EXPORTER_NAMESPACE
+    if len(sys.argv) <= 1:
+        exit('Please provide the dcgm-exporter namespace as an argument for the script')
+    return sys.argv[1]
 
 def get_dcgm_exporter_json(dcgm_exporter_namespace):
     debug_print('Getting dcgm-exporter json')
