@@ -12,24 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-image:
-  repository: nvcr.io/nvidia/k8s/dcgm-exporter
-  pullPolicy: IfNotPresent
-  tag: 2.3.4-2.6.4-ubuntu20.04
-
 arguments: ["--kubernetes-gpu-id-type", "device-name"]
-
-imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
-
-serviceAccount:
-  create: true
-  annotations: {}
-  name:
-
-podAnnotations: {}
-podSecurityContext: {}
 
 securityContext:
   runAsNonRoot: false
@@ -38,20 +21,10 @@ securityContext:
      add: ["SYS_ADMIN"]
   privileged: true
 
-service:
-  enable: true
-  type: ClusterIP
-  port: 9400
-  address: ":9400"
-  annotations: {}
-
-resources: {}
 serviceMonitor:
   enabled: false
   interval: 15s
   additionalLabels: {}
-
-mapPodsMetrics: false
 
 nodeSelector:
   feature.node.kubernetes.io/pci-10de.present: "true"
@@ -60,12 +33,3 @@ tolerations:
 - effect: NoSchedule
   key: nvidia.com/gpu
   operator: Exists
-
-affinity: {}
-
-extraHostVolumes: []
-extraConfigMapVolumes: []
-extraVolumeMounts: []
-extraEnv: []
-
-kubeletPath: "/var/lib/kubelet/pod-resources"
