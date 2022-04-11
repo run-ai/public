@@ -12,6 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+image:
+  repository: nvcr.io/nvidia/k8s/dcgm-exporter
+  pullPolicy: IfNotPresent
+  tag: 2.3.4-2.6.4-ubuntu20.04
+
 arguments: ["--kubernetes-gpu-id-type", "device-name"]
 
 securityContext:
