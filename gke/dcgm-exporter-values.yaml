@@ -15,7 +15,7 @@
 image:
   repository: nvcr.io/nvidia/k8s/dcgm-exporter
   pullPolicy: IfNotPresent
-  tag: 2.3.4-2.6.4-ubuntu20.04
+  tag: 2.3.5-2.6.5-ubuntu20.04
 
 arguments: ["--kubernetes-gpu-id-type", "device-name"]
 
