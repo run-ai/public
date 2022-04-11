@@ -71,6 +71,11 @@ nginx-ingress:
         - "RUNAI_IP_ADDRERSS"
     image:
       repository: "k8s.gcr.io/ingress-nginx/controller"
+    admissionWebhooks:
+      patch:
+        image:
+          registry: k8s.gcr.io
+          image: ingress-nginx/kube-webhook-certgen
   defaultBackend:
     image:
       repository: "k8s.gcr.io/defaultbackend-amd64"
@@ -114,11 +119,11 @@ keycloak:
     - name: gcr-secret
   image:
     repository: gcr.io/run-ai-prod/keycloak
-    tag: d52a1cc
+    tag: 7626759
   initContainer:
     image:
       repository: gcr.io/run-ai-prod/keycloak-init
-      tag: d52a1cc
+      tag: 7626759
 grafana:
   enabled: true
   image:
@@ -145,6 +150,9 @@ installDashboards: true
 
 thanos:
   enabled: true
+  image:
+    registry: docker.io
+    repository: bitnami/thanos
   receive:
     persistence:
       enabled: true
