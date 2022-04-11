@@ -114,7 +114,7 @@ def edit_dcgm_exporter(dcgm_exporter_namespace):
 ################ dcgm-exporter ################
 def patch_runaiconfig(dcgm_exporter_namespace):
     debug_print('Patching runaiconfig with dcgm-exporter namespace')
-    patch_command = 'kubectl patch RunaiConfig runai -n runai -p \'{"spec": {"global": {"nvidiaDcgmExporter": {"namespace": "%s", "installedFromGpuOperator": "false"}}}}\' --type="merge"' % (dcgm_exporter_namespace, )
+    patch_command = 'kubectl patch RunaiConfig runai -n runai -p \'{"spec": {"global": {"nvidiaDcgmExporter": {"namespace": "%s", "installedFromGpuOperator": false}}}}\' --type="merge"' % (dcgm_exporter_namespace, )
     exec_string_command(patch_command)
 
 def main():
