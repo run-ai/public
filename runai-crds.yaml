@@ -4190,6 +4190,38 @@ spec:
                           required:
                             type: boolean
                         type: object
+                      sshKeyFile:
+                        properties:
+                          canEdit:
+                            default: true
+                            type: boolean
+                          format:
+                            enum:
+                            - envVar
+                            - password
+                            - email
+                            - volume
+                            - kubeName
+                            - name
+                            - duration
+                            - memory
+                            - imageName
+                            - gpuMemory
+                            type: string
+                          options:
+                            items:
+                              properties:
+                                disabled:
+                                  type: boolean
+                                name:
+                                  type: string
+                                value:
+                                  type: string
+                              type: object
+                            type: array
+                          required:
+                            type: boolean
+                        type: object
                       username:
                         properties:
                           canEdit:
@@ -4265,6 +4297,9 @@ spec:
                             repository:
                               type: string
                             rev:
+                              default: ""
+                              type: string
+                            sshKeyFile:
                               default: ""
                               type: string
                             username:
@@ -4776,7 +4811,46 @@ spec:
                     type: string
                 type: object
               metric:
-                description: The metric to use for autoscaling
+                description: The predefined metric to use for autoscaling
+                properties:
+                  rules:
+                    properties:
+                      canEdit:
+                        default: true
+                        type: boolean
+                      format:
+                        enum:
+                        - envVar
+                        - password
+                        - email
+                        - volume
+                        - kubeName
+                        - name
+                        - duration
+                        - memory
+                        - imageName
+                        - gpuMemory
+                        type: string
+                      options:
+                        items:
+                          properties:
+                            disabled:
+                              type: boolean
+                            name:
+                              type: string
+                            value:
+                              type: string
+                          type: object
+                        type: array
+                      required:
+                        type: boolean
+                    type: object
+                  value:
+                    type: string
+                type: object
+              metricName:
+                description: The exact metric name to use for autoscaling (overrides
+                  Metric field)
                 properties:
                   rules:
                     properties:
@@ -5507,6 +5581,7 @@ spec:
                             secret:
                               type: string
                             url:
+                              default: ""
                               description: ' url of the S3 server. default: https://s3.amazon.com'
                               type: string
                           required:
@@ -5514,7 +5589,6 @@ spec:
                           - key
                           - path
                           - secret
-                          - url
                           type: object
                       type: object
                     type: object
@@ -6089,6 +6163,9 @@ spec:
                             rev:
                               default: ''
                               type: string
+                            sshKeyFile:
+                              default: ''
+                              type: string
                             username:
                               default: ''
                               type: string
@@ -6210,7 +6287,14 @@ spec:
                     type: string
                 type: object
               metric:
-                description: The metric to use for autoscaling
+                description: The predefined metric to use for autoscaling
+                properties:
+                  value:
+                    type: string
+                type: object
+              metricName:
+                description: The exact metric name to use for autoscaling (overrides
+                  Metric field)
                 properties:
                   value:
                     type: string
@@ -6357,6 +6441,7 @@ spec:
                             secret:
                               type: string
                             url:
+                              default: ''
                               description: ' url of the S3 server. default: https://s3.amazon.com'
                               type: string
                           required:
@@ -6364,7 +6449,6 @@ spec:
                           - key
                           - path
                           - secret
-                          - url
                           type: object
                       type: object
                     type: object
@@ -6610,6 +6694,9 @@ spec:
                                 rev:
                                   default: ''
                                   type: string
+                                sshKeyFile:
+                                  default: ''
+                                  type: string
                                 username:
                                   default: ''
                                   type: string
@@ -6732,7 +6819,14 @@ spec:
                         type: string
                     type: object
                   metric:
-                    description: The metric to use for autoscaling
+                    description: The predefined metric to use for autoscaling
+                    properties:
+                      value:
+                        type: string
+                    type: object
+                  metricName:
+                    description: The exact metric name to use for autoscaling (overrides
+                      Metric field)
                     properties:
                       value:
                         type: string
@@ -6881,6 +6975,7 @@ spec:
                                 secret:
                                   type: string
                                 url:
+                                  default: ''
                                   description: ' url of the S3 server. default: https://s3.amazon.com'
                                   type: string
                               required:
@@ -6888,7 +6983,6 @@ spec:
                               - key
                               - path
                               - secret
-                              - url
                               type: object
                           type: object
                         type: object
