@@ -3768,6 +3768,44 @@ spec:
                   of this workload (referred to as   "user" template) or can reside
                   in runai namespace (referred to as "global" template)'
                 type: string
+              class:
+                description: The autoscaler class for knative to use
+                properties:
+                  rules:
+                    properties:
+                      canEdit:
+                        default: true
+                        type: boolean
+                      format:
+                        enum:
+                        - envVar
+                        - password
+                        - email
+                        - volume
+                        - kubeName
+                        - name
+                        - duration
+                        - memory
+                        - imageName
+                        - gpuMemory
+                        type: string
+                      options:
+                        items:
+                          properties:
+                            disabled:
+                              type: boolean
+                            name:
+                              type: string
+                            value:
+                              type: string
+                          type: object
+                        type: array
+                      required:
+                        type: boolean
+                    type: object
+                  value:
+                    type: string
+                type: object
               command:
                 description: '   If set, overrides the image''s entry point with the
                   supplied command.'
@@ -6083,6 +6121,44 @@ spec:
                   of this workload (referred to as   "user" template) or can reside
                   in runai namespace (referred to as "global" template)'
                 type: string
+              class:
+                description: The autoscaler class for knative to use
+                properties:
+                  rules:
+                    properties:
+                      canEdit:
+                        default: true
+                        type: boolean
+                      format:
+                        enum:
+                        - envVar
+                        - password
+                        - email
+                        - volume
+                        - kubeName
+                        - name
+                        - duration
+                        - memory
+                        - imageName
+                        - gpuMemory
+                        type: string
+                      options:
+                        items:
+                          properties:
+                            disabled:
+                              type: boolean
+                            name:
+                              type: string
+                            value:
+                              type: string
+                          type: object
+                        type: array
+                      required:
+                        type: boolean
+                    type: object
+                  value:
+                    type: string
+                type: object
               command:
                 description: '   If set, overrides the image''s entry point with the
                   supplied command.'
@@ -6612,6 +6688,44 @@ spec:
                       of this workload (referred to as   "user" template) or can reside
                       in runai namespace (referred to as "global" template)'
                     type: string
+                  class:
+                    description: The autoscaler class for knative to use
+                    properties:
+                      rules:
+                        properties:
+                          canEdit:
+                            default: true
+                            type: boolean
+                          format:
+                            enum:
+                            - envVar
+                            - password
+                            - email
+                            - volume
+                            - kubeName
+                            - name
+                            - duration
+                            - memory
+                            - imageName
+                            - gpuMemory
+                            type: string
+                          options:
+                            items:
+                              properties:
+                                disabled:
+                                  type: boolean
+                                name:
+                                  type: string
+                                value:
+                                  type: string
+                              type: object
+                            type: array
+                          required:
+                            type: boolean
+                        type: object
+                      value:
+                        type: string
+                    type: object
                   command:
                     description: '   If set, overrides the image''s entry point with
                       the supplied command.'
