@@ -17564,6 +17564,41 @@ spec:
   versions:
     - name: v1
       served: true
+      storage: false
+      schema:
+        openAPIV3Schema:
+          properties:
+            apiVersion:
+              type: string
+            kind:
+              type: string
+            metadata:
+              type: object
+            spec:
+              properties:
+                minMember:
+                  format: int32
+                  type: integer
+                queue:
+                  type: string
+                priorityClassName:
+                  type: string
+              type: object
+            status:
+              properties:
+                succeeded:
+                  format: int32
+                  type: integer
+                failed:
+                  format: int32
+                  type: integer
+                running:
+                  format: int32
+                  type: integer
+              type: object
+          type: object
+    - name: v2alpha1
+      served: true
       storage: true
       schema:
         openAPIV3Schema:
