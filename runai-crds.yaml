@@ -959,46 +959,6 @@ spec:
                   value:
                     type: string
                 type: object
-              jobNamePrefix:
-                description: '  A prefix used for assigning a name to the created
-                  resource.   Either name of jobNamePrefix should be provided, not
-                  both.'
-                properties:
-                  rules:
-                    properties:
-                      canEdit:
-                        default: true
-                        type: boolean
-                      format:
-                        enum:
-                        - envVar
-                        - password
-                        - email
-                        - volume
-                        - kubeName
-                        - name
-                        - duration
-                        - memory
-                        - imageName
-                        - gpuMemory
-                        type: string
-                      options:
-                        items:
-                          properties:
-                            disabled:
-                              type: boolean
-                            name:
-                              type: string
-                            value:
-                              type: string
-                          type: object
-                        type: array
-                      required:
-                        type: boolean
-                    type: object
-                  value:
-                    type: string
-                type: object
               labels:
                 description: Specifies labels to be set in the container running the
                   created workload.
@@ -1277,7 +1237,46 @@ spec:
                 type: object
               name:
                 description: '  Specific name of the created resource.   Either name
-                  of jobNamePrefix should be provided, not both.'
+                  of namePrefix should be provided, not both.'
+                properties:
+                  rules:
+                    properties:
+                      canEdit:
+                        default: true
+                        type: boolean
+                      format:
+                        enum:
+                        - envVar
+                        - password
+                        - email
+                        - volume
+                        - kubeName
+                        - name
+                        - duration
+                        - memory
+                        - imageName
+                        - gpuMemory
+                        type: string
+                      options:
+                        items:
+                          properties:
+                            disabled:
+                              type: boolean
+                            name:
+                              type: string
+                            value:
+                              type: string
+                          type: object
+                        type: array
+                      required:
+                        type: boolean
+                    type: object
+                  value:
+                    type: string
+                type: object
+              namePrefix:
+                description: '  A prefix used for assigning a name to the created
+                  resource.   Either name of namePrefix should be provided, not both.'
                 properties:
                   rules:
                     properties:
@@ -3343,46 +3342,6 @@ spec:
                   value:
                     type: string
                 type: object
-              jobNamePrefix:
-                description: '  A prefix used for assigning a name to the created
-                  resource.   Either name of jobNamePrefix should be provided, not
-                  both.'
-                properties:
-                  rules:
-                    properties:
-                      canEdit:
-                        default: true
-                        type: boolean
-                      format:
-                        enum:
-                        - envVar
-                        - password
-                        - email
-                        - volume
-                        - kubeName
-                        - name
-                        - duration
-                        - memory
-                        - imageName
-                        - gpuMemory
-                        type: string
-                      options:
-                        items:
-                          properties:
-                            disabled:
-                              type: boolean
-                            name:
-                              type: string
-                            value:
-                              type: string
-                          type: object
-                        type: array
-                      required:
-                        type: boolean
-                    type: object
-                  value:
-                    type: string
-                type: object
               labels:
                 description: Specifies labels to be set in the container running the
                   created workload.
@@ -3661,7 +3620,46 @@ spec:
                 type: object
               name:
                 description: '  Specific name of the created resource.   Either name
-                  of jobNamePrefix should be provided, not both.'
+                  of namePrefix should be provided, not both.'
+                properties:
+                  rules:
+                    properties:
+                      canEdit:
+                        default: true
+                        type: boolean
+                      format:
+                        enum:
+                        - envVar
+                        - password
+                        - email
+                        - volume
+                        - kubeName
+                        - name
+                        - duration
+                        - memory
+                        - imageName
+                        - gpuMemory
+                        type: string
+                      options:
+                        items:
+                          properties:
+                            disabled:
+                              type: boolean
+                            name:
+                              type: string
+                            value:
+                              type: string
+                          type: object
+                        type: array
+                      required:
+                        type: boolean
+                    type: object
+                  value:
+                    type: string
+                type: object
+              namePrefix:
+                description: '  A prefix used for assigning a name to the created
+                  resource.   Either name of namePrefix should be provided, not both.'
                 properties:
                   rules:
                     properties:
@@ -5020,14 +5018,6 @@ spec:
                   value:
                     type: string
                 type: object
-              jobNamePrefix:
-                description: '  A prefix used for assigning a name to the created
-                  resource.   Either name of jobNamePrefix should be provided, not
-                  both.'
-                properties:
-                  value:
-                    type: string
-                type: object
               labels:
                 description: Specifies labels to be set in the container running the
                   created workload.
@@ -5093,7 +5083,14 @@ spec:
                 type: object
               name:
                 description: '  Specific name of the created resource.   Either name
-                  of jobNamePrefix should be provided, not both.'
+                  of namePrefix should be provided, not both.'
+                properties:
+                  value:
+                    type: string
+                type: object
+              namePrefix:
+                description: '  A prefix used for assigning a name to the created
+                  resource.   Either name of namePrefix should be provided, not both.'
                 properties:
                   value:
                     type: string
@@ -5582,14 +5579,6 @@ spec:
                       value:
                         type: string
                     type: object
-                  jobNamePrefix:
-                    description: '  A prefix used for assigning a name to the created
-                      resource.   Either name of jobNamePrefix should be provided,
-                      not both.'
-                    properties:
-                      value:
-                        type: string
-                    type: object
                   jupyter:
                     description: Indication if an interactive workload should run
                       jupyter notebook
@@ -5663,7 +5652,15 @@ spec:
                     type: object
                   name:
                     description: '  Specific name of the created resource.   Either
-                      name of jobNamePrefix should be provided, not both.'
+                      name of namePrefix should be provided, not both.'
+                    properties:
+                      value:
+                        type: string
+                    type: object
+                  namePrefix:
+                    description: '  A prefix used for assigning a name to the created
+                      resource.   Either name of namePrefix should be provided, not
+                      both.'
                     properties:
                       value:
                         type: string
@@ -6897,46 +6894,6 @@ spec:
                   value:
                     type: string
                 type: object
-              jobNamePrefix:
-                description: '  A prefix used for assigning a name to the created
-                  resource.   Either name of jobNamePrefix should be provided, not
-                  both.'
-                properties:
-                  rules:
-                    properties:
-                      canEdit:
-                        default: true
-                        type: boolean
-                      format:
-                        enum:
-                        - envVar
-                        - password
-                        - email
-                        - volume
-                        - kubeName
-                        - name
-                        - duration
-                        - memory
-                        - imageName
-                        - gpuMemory
-                        type: string
-                      options:
-                        items:
-                          properties:
-                            disabled:
-                              type: boolean
-                            name:
-                              type: string
-                            value:
-                              type: string
-                          type: object
-                        type: array
-                      required:
-                        type: boolean
-                    type: object
-                  value:
-                    type: string
-                type: object
               labels:
                 description: Specifies labels to be set in the container running the
                   created workload.
@@ -7215,7 +7172,46 @@ spec:
                 type: object
               name:
                 description: '  Specific name of the created resource.   Either name
-                  of jobNamePrefix should be provided, not both.'
+                  of namePrefix should be provided, not both.'
+                properties:
+                  rules:
+                    properties:
+                      canEdit:
+                        default: true
+                        type: boolean
+                      format:
+                        enum:
+                        - envVar
+                        - password
+                        - email
+                        - volume
+                        - kubeName
+                        - name
+                        - duration
+                        - memory
+                        - imageName
+                        - gpuMemory
+                        type: string
+                      options:
+                        items:
+                          properties:
+                            disabled:
+                              type: boolean
+                            name:
+                              type: string
+                            value:
+                              type: string
+                          type: object
+                        type: array
+                      required:
+                        type: boolean
+                    type: object
+                  value:
+                    type: string
+                type: object
+              namePrefix:
+                description: '  A prefix used for assigning a name to the created
+                  resource.   Either name of namePrefix should be provided, not both.'
                 properties:
                   rules:
                     properties:
@@ -9317,46 +9313,6 @@ spec:
                       value:
                         type: string
                     type: object
-                  jobNamePrefix:
-                    description: '  A prefix used for assigning a name to the created
-                      resource.   Either name of jobNamePrefix should be provided,
-                      not both.'
-                    properties:
-                      rules:
-                        properties:
-                          canEdit:
-                            default: true
-                            type: boolean
-                          format:
-                            enum:
-                            - envVar
-                            - password
-                            - email
-                            - volume
-                            - kubeName
-                            - name
-                            - duration
-                            - memory
-                            - imageName
-                            - gpuMemory
-                            type: string
-                          options:
-                            items:
-                              properties:
-                                disabled:
-                                  type: boolean
-                                name:
-                                  type: string
-                                value:
-                                  type: string
-                              type: object
-                            type: array
-                          required:
-                            type: boolean
-                        type: object
-                      value:
-                        type: string
-                    type: object
                   jupyter:
                     description: Indication if an interactive workload should run
                       jupyter notebook
@@ -9651,7 +9607,47 @@ spec:
                     type: object
                   name:
                     description: '  Specific name of the created resource.   Either
-                      name of jobNamePrefix should be provided, not both.'
+                      name of namePrefix should be provided, not both.'
+                    properties:
+                      rules:
+                        properties:
+                          canEdit:
+                            default: true
+                            type: boolean
+                          format:
+                            enum:
+                            - envVar
+                            - password
+                            - email
+                            - volume
+                            - kubeName
+                            - name
+                            - duration
+                            - memory
+                            - imageName
+                            - gpuMemory
+                            type: string
+                          options:
+                            items:
+                              properties:
+                                disabled:
+                                  type: boolean
+                                name:
+                                  type: string
+                                value:
+                                  type: string
+                              type: object
+                            type: array
+                          required:
+                            type: boolean
+                        type: object
+                      value:
+                        type: string
+                    type: object
+                  namePrefix:
+                    description: '  A prefix used for assigning a name to the created
+                      resource.   Either name of namePrefix should be provided, not
+                      both.'
                     properties:
                       rules:
                         properties:
@@ -11781,46 +11777,6 @@ spec:
                   value:
                     type: string
                 type: object
-              jobNamePrefix:
-                description: '  A prefix used for assigning a name to the created
-                  resource.   Either name of jobNamePrefix should be provided, not
-                  both.'
-                properties:
-                  rules:
-                    properties:
-                      canEdit:
-                        default: true
-                        type: boolean
-                      format:
-                        enum:
-                        - envVar
-                        - password
-                        - email
-                        - volume
-                        - kubeName
-                        - name
-                        - duration
-                        - memory
-                        - imageName
-                        - gpuMemory
-                        type: string
-                      options:
-                        items:
-                          properties:
-                            disabled:
-                              type: boolean
-                            name:
-                              type: string
-                            value:
-                              type: string
-                          type: object
-                        type: array
-                      required:
-                        type: boolean
-                    type: object
-                  value:
-                    type: string
-                type: object
               labels:
                 description: Specifies labels to be set in the container running the
                   created workload.
@@ -12167,7 +12123,46 @@ spec:
                 type: object
               name:
                 description: '  Specific name of the created resource.   Either name
-                  of jobNamePrefix should be provided, not both.'
+                  of namePrefix should be provided, not both.'
+                properties:
+                  rules:
+                    properties:
+                      canEdit:
+                        default: true
+                        type: boolean
+                      format:
+                        enum:
+                        - envVar
+                        - password
+                        - email
+                        - volume
+                        - kubeName
+                        - name
+                        - duration
+                        - memory
+                        - imageName
+                        - gpuMemory
+                        type: string
+                      options:
+                        items:
+                          properties:
+                            disabled:
+                              type: boolean
+                            name:
+                              type: string
+                            value:
+                              type: string
+                          type: object
+                        type: array
+                      required:
+                        type: boolean
+                    type: object
+                  value:
+                    type: string
+                type: object
+              namePrefix:
+                description: '  A prefix used for assigning a name to the created
+                  resource.   Either name of namePrefix should be provided, not both.'
                 properties:
                   rules:
                     properties:
@@ -14154,46 +14149,6 @@ spec:
                   value:
                     type: string
                 type: object
-              jobNamePrefix:
-                description: '  A prefix used for assigning a name to the created
-                  resource.   Either name of jobNamePrefix should be provided, not
-                  both.'
-                properties:
-                  rules:
-                    properties:
-                      canEdit:
-                        default: true
-                        type: boolean
-                      format:
-                        enum:
-                        - envVar
-                        - password
-                        - email
-                        - volume
-                        - kubeName
-                        - name
-                        - duration
-                        - memory
-                        - imageName
-                        - gpuMemory
-                        type: string
-                      options:
-                        items:
-                          properties:
-                            disabled:
-                              type: boolean
-                            name:
-                              type: string
-                            value:
-                              type: string
-                          type: object
-                        type: array
-                      required:
-                        type: boolean
-                    type: object
-                  value:
-                    type: string
-                type: object
               labels:
                 description: Specifies labels to be set in the container running the
                   created workload.
@@ -14424,6 +14379,13 @@ spec:
                 type: object
               metric:
                 description: The predefined metric to use for autoscaling
+                enum:
+                - cpu-utilization
+                - latency
+                - throughput
+                - concurrency
+                - gpu-utilization
+                - custom
                 properties:
                   rules:
                     properties:
@@ -14579,7 +14541,46 @@ spec:
                 type: object
               name:
                 description: '  Specific name of the created resource.   Either name
-                  of jobNamePrefix should be provided, not both.'
+                  of namePrefix should be provided, not both.'
+                properties:
+                  rules:
+                    properties:
+                      canEdit:
+                        default: true
+                        type: boolean
+                      format:
+                        enum:
+                        - envVar
+                        - password
+                        - email
+                        - volume
+                        - kubeName
+                        - name
+                        - duration
+                        - memory
+                        - imageName
+                        - gpuMemory
+                        type: string
+                      options:
+                        items:
+                          properties:
+                            disabled:
+                              type: boolean
+                            name:
+                              type: string
+                            value:
+                              type: string
+                          type: object
+                        type: array
+                      required:
+                        type: boolean
+                    type: object
+                  value:
+                    type: string
+                type: object
+              namePrefix:
+                description: '  A prefix used for assigning a name to the created
+                  resource.   Either name of namePrefix should be provided, not both.'
                 properties:
                   rules:
                     properties:
@@ -15840,14 +15841,6 @@ spec:
                   value:
                     type: string
                 type: object
-              jobNamePrefix:
-                description: '  A prefix used for assigning a name to the created
-                  resource.   Either name of jobNamePrefix should be provided, not
-                  both.'
-                properties:
-                  value:
-                    type: string
-                type: object
               labels:
                 description: Specifies labels to be set in the container running the
                   created workload.
@@ -15925,7 +15918,14 @@ spec:
                 type: object
               name:
                 description: '  Specific name of the created resource.   Either name
-                  of jobNamePrefix should be provided, not both.'
+                  of namePrefix should be provided, not both.'
+                properties:
+                  value:
+                    type: string
+                type: object
+              namePrefix:
+                description: '  A prefix used for assigning a name to the created
+                  resource.   Either name of namePrefix should be provided, not both.'
                 properties:
                   value:
                     type: string
@@ -16361,14 +16361,6 @@ spec:
                       value:
                         type: string
                     type: object
-                  jobNamePrefix:
-                    description: '  A prefix used for assigning a name to the created
-                      resource.   Either name of jobNamePrefix should be provided,
-                      not both.'
-                    properties:
-                      value:
-                        type: string
-                    type: object
                   labels:
                     description: Specifies labels to be set in the container running
                       the created workload.
@@ -16447,7 +16439,15 @@ spec:
                     type: object
                   name:
                     description: '  Specific name of the created resource.   Either
-                      name of jobNamePrefix should be provided, not both.'
+                      name of namePrefix should be provided, not both.'
+                    properties:
+                      value:
+                        type: string
+                    type: object
+                  namePrefix:
+                    description: '  A prefix used for assigning a name to the created
+                      resource.   Either name of namePrefix should be provided, not
+                      both.'
                     properties:
                       value:
                         type: string
@@ -17640,46 +17640,6 @@ spec:
                   value:
                     type: string
                 type: object
-              jobNamePrefix:
-                description: '  A prefix used for assigning a name to the created
-                  resource.   Either name of jobNamePrefix should be provided, not
-                  both.'
-                properties:
-                  rules:
-                    properties:
-                      canEdit:
-                        default: true
-                        type: boolean
-                      format:
-                        enum:
-                        - envVar
-                        - password
-                        - email
-                        - volume
-                        - kubeName
-                        - name
-                        - duration
-                        - memory
-                        - imageName
-                        - gpuMemory
-                        type: string
-                      options:
-                        items:
-                          properties:
-                            disabled:
-                              type: boolean
-                            name:
-                              type: string
-                            value:
-                              type: string
-                          type: object
-                        type: array
-                      required:
-                        type: boolean
-                    type: object
-                  value:
-                    type: string
-                type: object
               labels:
                 description: Specifies labels to be set in the container running the
                   created workload.
@@ -17910,6 +17870,13 @@ spec:
                 type: object
               metric:
                 description: The predefined metric to use for autoscaling
+                enum:
+                - cpu-utilization
+                - latency
+                - throughput
+                - concurrency
+                - gpu-utilization
+                - custom
                 properties:
                   rules:
                     properties:
@@ -18065,7 +18032,46 @@ spec:
                 type: object
               name:
                 description: '  Specific name of the created resource.   Either name
-                  of jobNamePrefix should be provided, not both.'
+                  of namePrefix should be provided, not both.'
+                properties:
+                  rules:
+                    properties:
+                      canEdit:
+                        default: true
+                        type: boolean
+                      format:
+                        enum:
+                        - envVar
+                        - password
+                        - email
+                        - volume
+                        - kubeName
+                        - name
+                        - duration
+                        - memory
+                        - imageName
+                        - gpuMemory
+                        type: string
+                      options:
+                        items:
+                          properties:
+                            disabled:
+                              type: boolean
+                            name:
+                              type: string
+                            value:
+                              type: string
+                          type: object
+                        type: array
+                      required:
+                        type: boolean
+                    type: object
+                  value:
+                    type: string
+                type: object
+              namePrefix:
+                description: '  A prefix used for assigning a name to the created
+                  resource.   Either name of namePrefix should be provided, not both.'
                 properties:
                   rules:
                     properties:
@@ -20064,46 +20070,6 @@ spec:
                       value:
                         type: string
                     type: object
-                  jobNamePrefix:
-                    description: '  A prefix used for assigning a name to the created
-                      resource.   Either name of jobNamePrefix should be provided,
-                      not both.'
-                    properties:
-                      rules:
-                        properties:
-                          canEdit:
-                            default: true
-                            type: boolean
-                          format:
-                            enum:
-                            - envVar
-                            - password
-                            - email
-                            - volume
-                            - kubeName
-                            - name
-                            - duration
-                            - memory
-                            - imageName
-                            - gpuMemory
-                            type: string
-                          options:
-                            items:
-                              properties:
-                                disabled:
-                                  type: boolean
-                                name:
-                                  type: string
-                                value:
-                                  type: string
-                              type: object
-                            type: array
-                          required:
-                            type: boolean
-                        type: object
-                      value:
-                        type: string
-                    type: object
                   labels:
                     description: Specifies labels to be set in the container running
                       the created workload.
@@ -20335,6 +20301,13 @@ spec:
                     type: object
                   metric:
                     description: The predefined metric to use for autoscaling
+                    enum:
+                    - cpu-utilization
+                    - latency
+                    - throughput
+                    - concurrency
+                    - gpu-utilization
+                    - custom
                     properties:
                       rules:
                         properties:
@@ -20490,7 +20463,47 @@ spec:
                     type: object
                   name:
                     description: '  Specific name of the created resource.   Either
-                      name of jobNamePrefix should be provided, not both.'
+                      name of namePrefix should be provided, not both.'
+                    properties:
+                      rules:
+                        properties:
+                          canEdit:
+                            default: true
+                            type: boolean
+                          format:
+                            enum:
+                            - envVar
+                            - password
+                            - email
+                            - volume
+                            - kubeName
+                            - name
+                            - duration
+                            - memory
+                            - imageName
+                            - gpuMemory
+                            type: string
+                          options:
+                            items:
+                              properties:
+                                disabled:
+                                  type: boolean
+                                name:
+                                  type: string
+                                value:
+                                  type: string
+                              type: object
+                            type: array
+                          required:
+                            type: boolean
+                        type: object
+                      value:
+                        type: string
+                    type: object
+                  namePrefix:
+                    description: '  A prefix used for assigning a name to the created
+                      resource.   Either name of namePrefix should be provided, not
+                      both.'
                     properties:
                       rules:
                         properties:
@@ -22472,46 +22485,6 @@ spec:
                   value:
                     type: string
                 type: object
-              jobNamePrefix:
-                description: '  A prefix used for assigning a name to the created
-                  resource.   Either name of jobNamePrefix should be provided, not
-                  both.'
-                properties:
-                  rules:
-                    properties:
-                      canEdit:
-                        default: true
-                        type: boolean
-                      format:
-                        enum:
-                        - envVar
-                        - password
-                        - email
-                        - volume
-                        - kubeName
-                        - name
-                        - duration
-                        - memory
-                        - imageName
-                        - gpuMemory
-                        type: string
-                      options:
-                        items:
-                          properties:
-                            disabled:
-                              type: boolean
-                            name:
-                              type: string
-                            value:
-                              type: string
-                          type: object
-                        type: array
-                      required:
-                        type: boolean
-                    type: object
-                  value:
-                    type: string
-                type: object
               jupyter:
                 description: Indication if an interactive workload should run jupyter
                   notebook
@@ -22805,7 +22778,46 @@ spec:
                 type: object
               name:
                 description: '  Specific name of the created resource.   Either name
-                  of jobNamePrefix should be provided, not both.'
+                  of namePrefix should be provided, not both.'
+                properties:
+                  rules:
+                    properties:
+                      canEdit:
+                        default: true
+                        type: boolean
+                      format:
+                        enum:
+                        - envVar
+                        - password
+                        - email
+                        - volume
+                        - kubeName
+                        - name
+                        - duration
+                        - memory
+                        - imageName
+                        - gpuMemory
+                        type: string
+                      options:
+                        items:
+                          properties:
+                            disabled:
+                              type: boolean
+                            name:
+                              type: string
+                            value:
+                              type: string
+                          type: object
+                        type: array
+                      required:
+                        type: boolean
+                    type: object
+                  value:
+                    type: string
+                type: object
+              namePrefix:
+                description: '  A prefix used for assigning a name to the created
+                  resource.   Either name of namePrefix should be provided, not both.'
                 properties:
                   rules:
                     properties:
@@ -24830,46 +24842,6 @@ spec:
                   value:
                     type: string
                 type: object
-              jobNamePrefix:
-                description: '  A prefix used for assigning a name to the created
-                  resource.   Either name of jobNamePrefix should be provided, not
-                  both.'
-                properties:
-                  rules:
-                    properties:
-                      canEdit:
-                        default: true
-                        type: boolean
-                      format:
-                        enum:
-                        - envVar
-                        - password
-                        - email
-                        - volume
-                        - kubeName
-                        - name
-                        - duration
-                        - memory
-                        - imageName
-                        - gpuMemory
-                        type: string
-                      options:
-                        items:
-                          properties:
-                            disabled:
-                              type: boolean
-                            name:
-                              type: string
-                            value:
-                              type: string
-                          type: object
-                        type: array
-                      required:
-                        type: boolean
-                    type: object
-                  value:
-                    type: string
-                type: object
               jupyter:
                 description: Indication if an interactive workload should run jupyter
                   notebook
@@ -25163,7 +25135,46 @@ spec:
                 type: object
               name:
                 description: '  Specific name of the created resource.   Either name
-                  of jobNamePrefix should be provided, not both.'
+                  of namePrefix should be provided, not both.'
+                properties:
+                  rules:
+                    properties:
+                      canEdit:
+                        default: true
+                        type: boolean
+                      format:
+                        enum:
+                        - envVar
+                        - password
+                        - email
+                        - volume
+                        - kubeName
+                        - name
+                        - duration
+                        - memory
+                        - imageName
+                        - gpuMemory
+                        type: string
+                      options:
+                        items:
+                          properties:
+                            disabled:
+                              type: boolean
+                            name:
+                              type: string
+                            value:
+                              type: string
+                          type: object
+                        type: array
+                      required:
+                        type: boolean
+                    type: object
+                  value:
+                    type: string
+                type: object
+              namePrefix:
+                description: '  A prefix used for assigning a name to the created
+                  resource.   Either name of namePrefix should be provided, not both.'
                 properties:
                   rules:
                     properties:
@@ -26500,14 +26511,6 @@ spec:
                   value:
                     type: string
                 type: object
-              jobNamePrefix:
-                description: '  A prefix used for assigning a name to the created
-                  resource.   Either name of jobNamePrefix should be provided, not
-                  both.'
-                properties:
-                  value:
-                    type: string
-                type: object
               jupyter:
                 description: Indication if an interactive workload should run jupyter
                   notebook
@@ -26580,7 +26583,14 @@ spec:
                 type: object
               name:
                 description: '  Specific name of the created resource.   Either name
-                  of jobNamePrefix should be provided, not both.'
+                  of namePrefix should be provided, not both.'
+                properties:
+                  value:
+                    type: string
+                type: object
+              namePrefix:
+                description: '  A prefix used for assigning a name to the created
+                  resource.   Either name of namePrefix should be provided, not both.'
                 properties:
                   value:
                     type: string
@@ -27064,14 +27074,6 @@ spec:
                       value:
                         type: string
                     type: object
-                  jobNamePrefix:
-                    description: '  A prefix used for assigning a name to the created
-                      resource.   Either name of jobNamePrefix should be provided,
-                      not both.'
-                    properties:
-                      value:
-                        type: string
-                    type: object
                   jupyter:
                     description: Indication if an interactive workload should run
                       jupyter notebook
@@ -27145,7 +27147,15 @@ spec:
                     type: object
                   name:
                     description: '  Specific name of the created resource.   Either
-                      name of jobNamePrefix should be provided, not both.'
+                      name of namePrefix should be provided, not both.'
+                    properties:
+                      value:
+                        type: string
+                    type: object
+                  namePrefix:
+                    description: '  A prefix used for assigning a name to the created
+                      resource.   Either name of namePrefix should be provided, not
+                      both.'
                     properties:
                       value:
                         type: string
@@ -28352,46 +28362,6 @@ spec:
                   value:
                     type: string
                 type: object
-              jobNamePrefix:
-                description: '  A prefix used for assigning a name to the created
-                  resource.   Either name of jobNamePrefix should be provided, not
-                  both.'
-                properties:
-                  rules:
-                    properties:
-                      canEdit:
-                        default: true
-                        type: boolean
-                      format:
-                        enum:
-                        - envVar
-                        - password
-                        - email
-                        - volume
-                        - kubeName
-                        - name
-                        - duration
-                        - memory
-                        - imageName
-                        - gpuMemory
-                        type: string
-                      options:
-                        items:
-                          properties:
-                            disabled:
-                              type: boolean
-                            name:
-                              type: string
-                            value:
-                              type: string
-                          type: object
-                        type: array
-                      required:
-                        type: boolean
-                    type: object
-                  value:
-                    type: string
-                type: object
               jupyter:
                 description: Indication if an interactive workload should run jupyter
                   notebook
@@ -28685,7 +28655,46 @@ spec:
                 type: object
               name:
                 description: '  Specific name of the created resource.   Either name
-                  of jobNamePrefix should be provided, not both.'
+                  of namePrefix should be provided, not both.'
+                properties:
+                  rules:
+                    properties:
+                      canEdit:
+                        default: true
+                        type: boolean
+                      format:
+                        enum:
+                        - envVar
+                        - password
+                        - email
+                        - volume
+                        - kubeName
+                        - name
+                        - duration
+                        - memory
+                        - imageName
+                        - gpuMemory
+                        type: string
+                      options:
+                        items:
+                          properties:
+                            disabled:
+                              type: boolean
+                            name:
+                              type: string
+                            value:
+                              type: string
+                          type: object
+                        type: array
+                      required:
+                        type: boolean
+                    type: object
+                  value:
+                    type: string
+                type: object
+              namePrefix:
+                description: '  A prefix used for assigning a name to the created
+                  resource.   Either name of namePrefix should be provided, not both.'
                 properties:
                   rules:
                     properties:
@@ -30774,46 +30783,6 @@ spec:
                       value:
                         type: string
                     type: object
-                  jobNamePrefix:
-                    description: '  A prefix used for assigning a name to the created
-                      resource.   Either name of jobNamePrefix should be provided,
-                      not both.'
-                    properties:
-                      rules:
-                        properties:
-                          canEdit:
-                            default: true
-                            type: boolean
-                          format:
-                            enum:
-                            - envVar
-                            - password
-                            - email
-                            - volume
-                            - kubeName
-                            - name
-                            - duration
-                            - memory
-                            - imageName
-                            - gpuMemory
-                            type: string
-                          options:
-                            items:
-                              properties:
-                                disabled:
-                                  type: boolean
-                                name:
-                                  type: string
-                                value:
-                                  type: string
-                              type: object
-                            type: array
-                          required:
-                            type: boolean
-                        type: object
-                      value:
-                        type: string
-                    type: object
                   jupyter:
                     description: Indication if an interactive workload should run
                       jupyter notebook
@@ -31108,7 +31077,47 @@ spec:
                     type: object
                   name:
                     description: '  Specific name of the created resource.   Either
-                      name of jobNamePrefix should be provided, not both.'
+                      name of namePrefix should be provided, not both.'
+                    properties:
+                      rules:
+                        properties:
+                          canEdit:
+                            default: true
+                            type: boolean
+                          format:
+                            enum:
+                            - envVar
+                            - password
+                            - email
+                            - volume
+                            - kubeName
+                            - name
+                            - duration
+                            - memory
+                            - imageName
+                            - gpuMemory
+                            type: string
+                          options:
+                            items:
+                              properties:
+                                disabled:
+                                  type: boolean
+                                name:
+                                  type: string
+                                value:
+                                  type: string
+                              type: object
+                            type: array
+                          required:
+                            type: boolean
+                        type: object
+                      value:
+                        type: string
+                    type: object
+                  namePrefix:
+                    description: '  A prefix used for assigning a name to the created
+                      resource.   Either name of namePrefix should be provided, not
+                      both.'
                     properties:
                       rules:
                         properties:
@@ -33288,46 +33297,6 @@ spec:
                   value:
                     type: string
                 type: object
-              jobNamePrefix:
-                description: '  A prefix used for assigning a name to the created
-                  resource.   Either name of jobNamePrefix should be provided, not
-                  both.'
-                properties:
-                  rules:
-                    properties:
-                      canEdit:
-                        default: true
-                        type: boolean
-                      format:
-                        enum:
-                        - envVar
-                        - password
-                        - email
-                        - volume
-                        - kubeName
-                        - name
-                        - duration
-                        - memory
-                        - imageName
-                        - gpuMemory
-                        type: string
-                      options:
-                        items:
-                          properties:
-                            disabled:
-                              type: boolean
-                            name:
-                              type: string
-                            value:
-                              type: string
-                          type: object
-                        type: array
-                      required:
-                        type: boolean
-                    type: object
-                  value:
-                    type: string
-                type: object
               labels:
                 description: Specifies labels to be set in the container running the
                   created workload.
@@ -33606,7 +33575,46 @@ spec:
                 type: object
               name:
                 description: '  Specific name of the created resource.   Either name
-                  of jobNamePrefix should be provided, not both.'
+                  of namePrefix should be provided, not both.'
+                properties:
+                  rules:
+                    properties:
+                      canEdit:
+                        default: true
+                        type: boolean
+                      format:
+                        enum:
+                        - envVar
+                        - password
+                        - email
+                        - volume
+                        - kubeName
+                        - name
+                        - duration
+                        - memory
+                        - imageName
+                        - gpuMemory
+                        type: string
+                      options:
+                        items:
+                          properties:
+                            disabled:
+                              type: boolean
+                            name:
+                              type: string
+                            value:
+                              type: string
+                          type: object
+                        type: array
+                      required:
+                        type: boolean
+                    type: object
+                  value:
+                    type: string
+                type: object
+              namePrefix:
+                description: '  A prefix used for assigning a name to the created
+                  resource.   Either name of namePrefix should be provided, not both.'
                 properties:
                   rules:
                     properties:
@@ -35694,46 +35702,6 @@ spec:
                   value:
                     type: string
                 type: object
-              jobNamePrefix:
-                description: '  A prefix used for assigning a name to the created
-                  resource.   Either name of jobNamePrefix should be provided, not
-                  both.'
-                properties:
-                  rules:
-                    properties:
-                      canEdit:
-                        default: true
-                        type: boolean
-                      format:
-                        enum:
-                        - envVar
-                        - password
-                        - email
-                        - volume
-                        - kubeName
-                        - name
-                        - duration
-                        - memory
-                        - imageName
-                        - gpuMemory
-                        type: string
-                      options:
-                        items:
-                          properties:
-                            disabled:
-                              type: boolean
-                            name:
-                              type: string
-                            value:
-                              type: string
-                          type: object
-                        type: array
-                      required:
-                        type: boolean
-                    type: object
-                  value:
-                    type: string
-                type: object
               labels:
                 description: Specifies labels to be set in the container running the
                   created workload.
@@ -36012,7 +35980,46 @@ spec:
                 type: object
               name:
                 description: '  Specific name of the created resource.   Either name
-                  of jobNamePrefix should be provided, not both.'
+                  of namePrefix should be provided, not both.'
+                properties:
+                  rules:
+                    properties:
+                      canEdit:
+                        default: true
+                        type: boolean
+                      format:
+                        enum:
+                        - envVar
+                        - password
+                        - email
+                        - volume
+                        - kubeName
+                        - name
+                        - duration
+                        - memory
+                        - imageName
+                        - gpuMemory
+                        type: string
+                      options:
+                        items:
+                          properties:
+                            disabled:
+                              type: boolean
+                            name:
+                              type: string
+                            value:
+                              type: string
+                          type: object
+                        type: array
+                      required:
+                        type: boolean
+                    type: object
+                  value:
+                    type: string
+                type: object
+              namePrefix:
+                description: '  A prefix used for assigning a name to the created
+                  resource.   Either name of namePrefix should be provided, not both.'
                 properties:
                   rules:
                     properties:
@@ -37380,14 +37387,6 @@ spec:
                   value:
                     type: string
                 type: object
-              jobNamePrefix:
-                description: '  A prefix used for assigning a name to the created
-                  resource.   Either name of jobNamePrefix should be provided, not
-                  both.'
-                properties:
-                  value:
-                    type: string
-                type: object
               labels:
                 description: Specifies labels to be set in the container running the
                   created workload.
@@ -37453,7 +37452,14 @@ spec:
                 type: object
               name:
                 description: '  Specific name of the created resource.   Either name
-                  of jobNamePrefix should be provided, not both.'
+                  of namePrefix should be provided, not both.'
+                properties:
+                  value:
+                    type: string
+                type: object
+              namePrefix:
+                description: '  A prefix used for assigning a name to the created
+                  resource.   Either name of namePrefix should be provided, not both.'
                 properties:
                   value:
                     type: string
@@ -37942,14 +37948,6 @@ spec:
                       value:
                         type: string
                     type: object
-                  jobNamePrefix:
-                    description: '  A prefix used for assigning a name to the created
-                      resource.   Either name of jobNamePrefix should be provided,
-                      not both.'
-                    properties:
-                      value:
-                        type: string
-                    type: object
                   jupyter:
                     description: Indication if an interactive workload should run
                       jupyter notebook
@@ -38023,7 +38021,15 @@ spec:
                     type: object
                   name:
                     description: '  Specific name of the created resource.   Either
-                      name of jobNamePrefix should be provided, not both.'
+                      name of namePrefix should be provided, not both.'
+                    properties:
+                      value:
+                        type: string
+                    type: object
+                  namePrefix:
+                    description: '  A prefix used for assigning a name to the created
+                      resource.   Either name of namePrefix should be provided, not
+                      both.'
                     properties:
                       value:
                         type: string
@@ -39280,46 +39286,6 @@ spec:
                   value:
                     type: string
                 type: object
-              jobNamePrefix:
-                description: '  A prefix used for assigning a name to the created
-                  resource.   Either name of jobNamePrefix should be provided, not
-                  both.'
-                properties:
-                  rules:
-                    properties:
-                      canEdit:
-                        default: true
-                        type: boolean
-                      format:
-                        enum:
-                        - envVar
-                        - password
-                        - email
-                        - volume
-                        - kubeName
-                        - name
-                        - duration
-                        - memory
-                        - imageName
-                        - gpuMemory
-                        type: string
-                      options:
-                        items:
-                          properties:
-                            disabled:
-                              type: boolean
-                            name:
-                              type: string
-                            value:
-                              type: string
-                          type: object
-                        type: array
-                      required:
-                        type: boolean
-                    type: object
-                  value:
-                    type: string
-                type: object
               labels:
                 description: Specifies labels to be set in the container running the
                   created workload.
@@ -39598,7 +39564,46 @@ spec:
                 type: object
               name:
                 description: '  Specific name of the created resource.   Either name
-                  of jobNamePrefix should be provided, not both.'
+                  of namePrefix should be provided, not both.'
+                properties:
+                  rules:
+                    properties:
+                      canEdit:
+                        default: true
+                        type: boolean
+                      format:
+                        enum:
+                        - envVar
+                        - password
+                        - email
+                        - volume
+                        - kubeName
+                        - name
+                        - duration
+                        - memory
+                        - imageName
+                        - gpuMemory
+                        type: string
+                      options:
+                        items:
+                          properties:
+                            disabled:
+                              type: boolean
+                            name:
+                              type: string
+                            value:
+                              type: string
+                          type: object
+                        type: array
+                      required:
+                        type: boolean
+                    type: object
+                  value:
+                    type: string
+                type: object
+              namePrefix:
+                description: '  A prefix used for assigning a name to the created
+                  resource.   Either name of namePrefix should be provided, not both.'
                 properties:
                   rules:
                     properties:
@@ -41700,46 +41705,6 @@ spec:
                       value:
                         type: string
                     type: object
-                  jobNamePrefix:
-                    description: '  A prefix used for assigning a name to the created
-                      resource.   Either name of jobNamePrefix should be provided,
-                      not both.'
-                    properties:
-                      rules:
-                        properties:
-                          canEdit:
-                            default: true
-                            type: boolean
-                          format:
-                            enum:
-                            - envVar
-                            - password
-                            - email
-                            - volume
-                            - kubeName
-                            - name
-                            - duration
-                            - memory
-                            - imageName
-                            - gpuMemory
-                            type: string
-                          options:
-                            items:
-                              properties:
-                                disabled:
-                                  type: boolean
-                                name:
-                                  type: string
-                                value:
-                                  type: string
-                              type: object
-                            type: array
-                          required:
-                            type: boolean
-                        type: object
-                      value:
-                        type: string
-                    type: object
                   jupyter:
                     description: Indication if an interactive workload should run
                       jupyter notebook
@@ -42034,7 +41999,47 @@ spec:
                     type: object
                   name:
                     description: '  Specific name of the created resource.   Either
-                      name of jobNamePrefix should be provided, not both.'
+                      name of namePrefix should be provided, not both.'
+                    properties:
+                      rules:
+                        properties:
+                          canEdit:
+                            default: true
+                            type: boolean
+                          format:
+                            enum:
+                            - envVar
+                            - password
+                            - email
+                            - volume
+                            - kubeName
+                            - name
+                            - duration
+                            - memory
+                            - imageName
+                            - gpuMemory
+                            type: string
+                          options:
+                            items:
+                              properties:
+                                disabled:
+                                  type: boolean
+                                name:
+                                  type: string
+                                value:
+                                  type: string
+                              type: object
+                            type: array
+                          required:
+                            type: boolean
+                        type: object
+                      value:
+                        type: string
+                    type: object
+                  namePrefix:
+                    description: '  A prefix used for assigning a name to the created
+                      resource.   Either name of namePrefix should be provided, not
+                      both.'
                     properties:
                       rules:
                         properties:
