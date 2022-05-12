@@ -14378,14 +14378,8 @@ spec:
                     type: string
                 type: object
               metric:
-                description: The predefined metric to use for autoscaling
-                enum:
-                - cpu-utilization
-                - latency
-                - throughput
-                - concurrency
-                - gpu-utilization
-                - custom
+                description: The predefined metric to use for autoscaling (cpu-utilization,
+                  latency, throughput, concurrency, gpu-utilization, custom)
                 properties:
                   rules:
                     properties:
@@ -17869,14 +17863,8 @@ spec:
                     type: string
                 type: object
               metric:
-                description: The predefined metric to use for autoscaling
-                enum:
-                - cpu-utilization
-                - latency
-                - throughput
-                - concurrency
-                - gpu-utilization
-                - custom
+                description: The predefined metric to use for autoscaling (cpu-utilization,
+                  latency, throughput, concurrency, gpu-utilization, custom)
                 properties:
                   rules:
                     properties:
@@ -20300,14 +20288,8 @@ spec:
                         type: string
                     type: object
                   metric:
-                    description: The predefined metric to use for autoscaling
-                    enum:
-                    - cpu-utilization
-                    - latency
-                    - throughput
-                    - concurrency
-                    - gpu-utilization
-                    - custom
+                    description: The predefined metric to use for autoscaling (cpu-utilization,
+                      latency, throughput, concurrency, gpu-utilization, custom)
                     properties:
                       rules:
                         properties:
