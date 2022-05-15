@@ -76,7 +76,7 @@ def remove_priority_class(gfd_json):
 
 def get_gfd_json():
     debug_print('Getting gpu-feature-discovery json')
-    get_gfd_json_command = 'kubectl get ds runai-cluster-gpu-feature-discovery -n node-feature-discovery -ojson'
+    get_gfd_json_command = 'kubectl get ds gpu-feature-discovery -n node-feature-discovery -ojson'
     json_output = exec_command(get_gfd_json_command)
     return json.loads(json_output)
 
