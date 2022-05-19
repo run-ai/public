@@ -8,6 +8,70 @@ DEBUG = True
 GPU_TOLERATION = {'effect': 'NoSchedule', 'key': 'nvidia.com/gpu', 'operator': 'Exists'}
 
 
+class PatchingDs():
+    def __init__(self, ds_name):
+        self._name = ds_name
+        self._should_edit = True
+
+    def _get_json(self):
+        debug_print('Getting {} json'.format(self._name))
+        json_output = exec_command(self._get_json_command)
+        return json.loads(json_output)
+
+    def patch(self):
+        if not self._should_edit:
+            return
+
+        ds_json = self._get_json()
+        self.edit_ds_json(ds_json)
+        debug_print('Applying edited {}'.format(self._name))
+        apply_json(ds_json)
+
+    def edit_ds_json(self, ds_json):
+        raise NotImplementedError()
+
+
+class Gfd(PatchingDs):
+    def __init__(self, version):
+        PatchingDs.__init__(self, 'gpu-feature-discovery')
+        ds_name = self._get_gfd_ds_name(version)
+        self._get_json_command = 'kubectl get ds {} -n node-feature-discovery -ojson'.format(ds_name)
+
+    def _get_gfd_ds_name(self, version):
+        if version == '2.4':
+            return 'runai-cluster-gpu-feature-discovery'
+        if version == '2.5':
+            return 'gpu-feature-discovery'
+        return ''
+
+    def edit_ds_json(self, ds_json):
+        add_nvidia_volumes_if_needed(ds_json)
+        remove_priority_class(ds_json)
+
+
+class Nfd(PatchingDs):
+    def __init__(self, version):
+        PatchingDs.__init__(self, 'node-feature-discovery')
+
+        if version != '2.5':
+            debug_print('No need to edit nfd - version: {}'.format(version))
+            self._should_edit = False
+            return
+
+        self._get_json_command = 'kubectl get ds nfd-worker -n node-feature-discovery -ojson'
+
+    def edit_ds_json(self, ds_json):
+        add_gpu_toleration_if_needed(ds_json)
+
+
+class DcgmExporter(PatchingDs):
+    def __init__(self, dcgm_exporter_namespace):
+        PatchingDs.__init__(self, 'dcgm-exporter')
+        self._get_json_command = 'kubectl get ds dcgm-exporter -n {} -ojson'.format(dcgm_exporter_namespace)
+
+    def edit_ds_json(self, ds_json):
+        add_nvidia_volumes_if_needed(ds_json)
+
 ################ General Functions ################
 def debug_print(str_to_print):
     if DEBUG:
@@ -34,6 +98,7 @@ def apply_json(json_content):
 
     os.remove(json_filepath)
 
+################ DS editing ################
 def add_nvidia_volumes(ds_json):
     debug_print('Adding nvidia volume to ds')
 
@@ -66,40 +131,15 @@ def add_nvidia_volumes_if_needed(ds_json):
 
     add_nvidia_volumes(ds_json)
 
-################ gpu-feature-discovery ################
-def remove_priority_class(gfd_json):
-    priorityClass = gfd_json['spec']['template']['spec'].get('priorityClassName')
+def remove_priority_class(ds_json):
+    priorityClass = ds_json['spec']['template']['spec'].get('priorityClassName')
     if not priorityClass:
+        debug_print('priorityClassName not found in ds - nothing to remove')
         return
 
-    debug_print('Removing priorityClassName from gpu-feature-discovery')
-    gfd_json['spec']['template']['spec']['priorityClassName'] = None
+    debug_print('Removing priorityClassName from ds')
+    ds_json['spec']['template']['spec']['priorityClassName'] = None
 
-def get_gfd_ds_name(version):
-    if version == '2.4':
-        return 'runai-cluster-gpu-feature-discovery'
-    if version == '2.5':
-        return 'gpu-feature-discovery'
-    return ''
-
-def get_gfd_json(version):
-    debug_print('Getting gpu-feature-discovery json')
-    ds_name = get_gfd_ds_name(version)
-    get_gfd_json_command = 'kubectl get ds {} -n node-feature-discovery -ojson'.format(ds_name)
-    json_output = exec_command(get_gfd_json_command)
-    return json.loads(json_output)
-
-def edit_gfd_json(gfd_json):
-    add_nvidia_volumes_if_needed(gfd_json)
-    remove_priority_class(gfd_json)
-
-def edit_gfd(version):
-    gfd_json = get_gfd_json(version)
-    edit_gfd_json(gfd_json)
-    debug_print('Applying edited gpu-feature-discovery')
-    apply_json(gfd_json)
-
-################ node-feature-discovery ################
 def add_gpu_toleration(ds_json):
     debug_print('Adding gpu toleration to ds')
 
@@ -124,40 +164,7 @@ def add_gpu_toleration_if_needed(ds_json):
 
     add_gpu_toleration(ds_json)
 
-def get_nfd_json():
-    debug_print('Getting node-feature-discovery json')
-    get_nfd_json_command = 'kubectl get ds nfd-worker -n node-feature-discovery -ojson'
-    json_output = exec_command(get_nfd_json_command)
-    return json.loads(json_output)
 
-def edit_nfd_json(nfd_json):
-    add_gpu_toleration_if_needed(nfd_json)
-
-def edit_nfd(version):
-    if version != '2.5':
-        debug_print('No need to edit nfd - version: {}'.format(version))
-
-    nfd_json = get_nfd_json()
-    edit_nfd_json(nfd_json)
-    debug_print('Applying edited node-feature-discovery')
-    apply_json(nfd_json)
-
-################ dcgm-exporter ################
-
-def get_dcgm_exporter_json(dcgm_exporter_namespace):
-    debug_print('Getting dcgm-exporter json')
-    get_dcgm_exporter_json_command = 'kubectl get ds dcgm-exporter -n {} -ojson'.format(dcgm_exporter_namespace)
-    json_output = exec_command(get_dcgm_exporter_json_command)
-    return json.loads(json_output)
-
-def edit_dcgm_exporter_json(dcgm_exporter_json):
-    add_nvidia_volumes_if_needed(dcgm_exporter_json)
-
-def edit_dcgm_exporter(dcgm_exporter_namespace):
-    dcgm_exporter_json = get_dcgm_exporter_json(dcgm_exporter_namespace)
-    edit_dcgm_exporter_json(dcgm_exporter_json)
-    debug_print('Applying edited dcgm-exporter')
-    apply_json(dcgm_exporter_json)
 
 ################ runaiconfig ################
 def patch_runaiconfig(dcgm_exporter_namespace):
@@ -180,9 +187,10 @@ def parse_args():
 def main():
     version, dcgm_exporter_namespace = parse_args()
 
-    edit_gfd(version)
-    edit_nfd(version)
-    edit_dcgm_exporter(dcgm_exporter_namespace)
+    ds_to_patch = [Gfd(version), Nfd(version), DcgmExporter(dcgm_exporter_namespace)]
+    for ds in ds_to_patch:
+        ds.patch()
+
     patch_runaiconfig(dcgm_exporter_namespace)
 
 if __name__ == "__main__":
