@@ -74,9 +74,17 @@ def remove_priority_class(gfd_json):
     debug_print('Removing priorityClassName from gpu-feature-discovery')
     gfd_json['spec']['template']['spec']['priorityClassName'] = None
 
-def get_gfd_json():
+def get_gfd_ds_name(version):
+    if version == '2.4':
+        return 'runai-cluster-gpu-feature-discovery'
+    if version == '2.5':
+        return 'gpu-feature-discovery'
+    return ''
+
+def get_gfd_json(version):
     debug_print('Getting gpu-feature-discovery json')
-    get_gfd_json_command = 'kubectl get ds gpu-feature-discovery -n node-feature-discovery -ojson'
+    ds_name = get_gfd_ds_name(version)
+    get_gfd_json_command = 'kubectl get ds {} -n node-feature-discovery -ojson'.format(ds_name)
     json_output = exec_command(get_gfd_json_command)
     return json.loads(json_output)
 
@@ -84,17 +92,42 @@ def edit_gfd_json(gfd_json):
     add_nvidia_volumes_if_needed(gfd_json)
     remove_priority_class(gfd_json)
 
-def edit_gfd():
-    gfd_json = get_gfd_json()
+def edit_gfd(version):
+    gfd_json = get_gfd_json(version)
     edit_gfd_json(gfd_json)
     debug_print('Applying edited gpu-feature-discovery')
     apply_json(gfd_json)
 
+################ node-feature-discovery ################
+def add_gpu_toleration(ds_json):
+    debug_print('Adding gpu toleration to ds')
+
+    tolerations = ds_json['spec']['template']['spec'].get('tolerations')
+    if not tolerations:
+        ds_json['spec']['template']['spec']['tolerations'] = []
+
+    gpu_toleration = {'effect': 'NoSchedule', 'key': 'nvidia.com/gpu', 'operator': 'Exists'}
+    ds_json['spec']['template']['spec']['tolerations'].append(gpu_toleration)
+
+def get_nfd_json():
+    debug_print('Getting node-feature-discovery json')
+    get_nfd_json_command = 'kubectl get ds nfd-worker -n node-feature-discovery -ojson'
+    json_output = exec_command(get_nfd_json_command)
+    return json.loads(json_output)
+
+def edit_nfd_json(nfd_json):
+    add_gpu_toleration(nfd_json)
+
+def edit_nfd(version):
+    if version != '2.5':
+        debug_print('No need to edit nfd - version: {}'.format(version))
+
+    nfd_json = get_nfd_json()
+    edit_nfd_json(nfd_json)
+    debug_print('Applying edited node-feature-discovery')
+    apply_json(nfd_json)
+
 ################ dcgm-exporter ################
-def get_dcgm_exporter_namespace_from_args():
-    if len(sys.argv) <= 1:
-        exit('Please provide the dcgm-exporter namespace as an argument for the script')
-    return sys.argv[1]
 
 def get_dcgm_exporter_json(dcgm_exporter_namespace):
     debug_print('Getting dcgm-exporter json')
@@ -111,16 +144,29 @@ def edit_dcgm_exporter(dcgm_exporter_namespace):
     debug_print('Applying edited dcgm-exporter')
     apply_json(dcgm_exporter_json)
 
-################ dcgm-exporter ################
+################ runaiconfig ################
 def patch_runaiconfig(dcgm_exporter_namespace):
     debug_print('Patching runaiconfig with dcgm-exporter namespace')
     patch_command = 'kubectl patch RunaiConfig runai -n runai -p \'{"spec": {"global": {"nvidiaDcgmExporter": {"namespace": "%s", "installedFromGpuOperator": false}}}}\' --type="merge"' % (dcgm_exporter_namespace, )
     exec_string_command(patch_command)
 
-def main():
-    dcgm_exporter_namespace = get_dcgm_exporter_namespace_from_args()
+def parse_args():
+    if len(sys.argv) < 3:
+        exit('Please provide the runai-version and dcgm-exporter namespace as arguments for the script, for example:\n'+
+        '"python3 gke_patches.py 2.4 <DCGM_NAMESPACE>"')
 
-    edit_gfd()
+    version = sys.argv[1]
+    if version not in ['2.4', '2.5']:
+        exit('Valid versions are: 2.4 or 2.5. For example:\n"python3 gke_patches.py 2.4 <DCGM_NAMESPACE>"')
+
+    dcgm_exporter_namespace = sys.argv[2]
+    return version, dcgm_exporter_namespace
+
+def main():
+    version, dcgm_exporter_namespace = parse_args()
+
+    edit_gfd(version)
+    edit_nfd(version)
     edit_dcgm_exporter(dcgm_exporter_namespace)
     patch_runaiconfig(dcgm_exporter_namespace)
 
