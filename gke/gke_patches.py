@@ -5,6 +5,7 @@ import subprocess
 
 
 DEBUG = True
+GPU_TOLERATION = {'effect': 'NoSchedule', 'key': 'nvidia.com/gpu', 'operator': 'Exists'}
 
 
 ################ General Functions ################
@@ -106,8 +107,22 @@ def add_gpu_toleration(ds_json):
     if not tolerations:
         ds_json['spec']['template']['spec']['tolerations'] = []
 
-    gpu_toleration = {'effect': 'NoSchedule', 'key': 'nvidia.com/gpu', 'operator': 'Exists'}
-    ds_json['spec']['template']['spec']['tolerations'].append(gpu_toleration)
+    ds_json['spec']['template']['spec']['tolerations'].append(GPU_TOLERATION)
+
+def add_gpu_toleration_if_needed(ds_json):
+    is_gpu_toleration_found = False
+    tolerations = ds_json['spec']['template']['spec'].get('tolerations')
+    if tolerations:
+        for toleration in tolerations:
+            if GPU_TOLERATION == toleration:
+                is_gpu_toleration_found = True
+                break
+
+    if is_gpu_toleration_found:
+        debug_print('GPU toleration already found in ds')
+        return
+
+    add_gpu_toleration(ds_json)
 
 def get_nfd_json():
     debug_print('Getting node-feature-discovery json')
@@ -116,7 +131,7 @@ def get_nfd_json():
     return json.loads(json_output)
 
 def edit_nfd_json(nfd_json):
-    add_gpu_toleration(nfd_json)
+    add_gpu_toleration_if_needed(nfd_json)
 
 def edit_nfd(version):
     if version != '2.5':
