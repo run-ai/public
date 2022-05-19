@@ -7,6 +7,35 @@ import subprocess
 DEBUG = True
 GPU_TOLERATION = {'effect': 'NoSchedule', 'key': 'nvidia.com/gpu', 'operator': 'Exists'}
 
+DCGM_EXPORTER_VALUES_YAML = """
+image:
+  repository: nvcr.io/nvidia/k8s/dcgm-exporter
+  pullPolicy: IfNotPresent
+  tag: 2.3.5-2.6.5-ubuntu20.04
+
+arguments: ["--kubernetes-gpu-id-type", "device-name"]
+
+securityContext:
+  runAsNonRoot: false
+  runAsUser: 0
+  capabilities:
+     add: ["SYS_ADMIN"]
+  privileged: true
+
+serviceMonitor:
+  enabled: false
+  interval: 15s
+  additionalLabels: {}
+
+nodeSelector:
+  feature.node.kubernetes.io/pci-10de.present: "true"
+
+tolerations:
+- effect: NoSchedule
+  key: nvidia.com/gpu
+  operator: Exists
+"""
+
 
 class PatchingDs():
     def __init__(self, ds_name):
@@ -18,9 +47,14 @@ class PatchingDs():
         json_output = exec_command(self._get_json_command)
         return json.loads(json_output)
 
+    def _pre_patch(self):
+        return
+
     def patch(self):
         if not self._should_edit:
             return
+
+        self._pre_patch()
 
         ds_json = self._get_json()
         self.edit_ds_json(ds_json)
@@ -38,9 +72,9 @@ class Gfd(PatchingDs):
         self._get_json_command = 'kubectl get ds {} -n node-feature-discovery -ojson'.format(ds_name)
 
     def _get_gfd_ds_name(self, version):
-        if version == '2.4':
+        if version == 2.4:
             return 'runai-cluster-gpu-feature-discovery'
-        if version == '2.5':
+        if version >= 2.5:
             return 'gpu-feature-discovery'
         return ''
 
@@ -53,7 +87,7 @@ class Nfd(PatchingDs):
     def __init__(self, version):
         PatchingDs.__init__(self, 'node-feature-discovery')
 
-        if version != '2.5':
+        if version < 2.5:
             debug_print('No need to edit nfd - version: {}'.format(version))
             self._should_edit = False
             return
@@ -67,11 +101,30 @@ class Nfd(PatchingDs):
 class DcgmExporter(PatchingDs):
     def __init__(self, dcgm_exporter_namespace):
         PatchingDs.__init__(self, 'dcgm-exporter')
-        self._get_json_command = 'kubectl get ds dcgm-exporter -n {} -ojson'.format(dcgm_exporter_namespace)
+        self._dcgm_exporter_namespace = dcgm_exporter_namespace
+        self._get_json_command = 'kubectl get ds dcgm-exporter -n {} -ojson'.format(self._dcgm_exporter_namespace)
+
+    def _pre_patch(self):
+        debug_print('Installing dcgm-exporter (if needed)')
+
+        dcgm_exporter_values_filepath = 'dcgm-exporter-values-temp.yaml'
+        write_to_file(DCGM_EXPORTER_VALUES_YAML, dcgm_exporter_values_filepath)
+
+        install_dcgm_exporter_commands = [
+            'helm repo add gpu-helm-charts https://nvidia.github.io/gpu-monitoring-tools/helm-charts',
+            'helm repo update',
+            'helm install -f {} dcgm-exporter gpu-helm-charts/dcgm-exporter -n {}'.format(dcgm_exporter_values_filepath, self._dcgm_exporter_namespace)
+        ]
+
+        for command in install_dcgm_exporter_commands:
+            exec_command(command)
+
+        os.remove(dcgm_exporter_values_filepath)
 
     def edit_ds_json(self, ds_json):
         add_nvidia_volumes_if_needed(ds_json)
         edit_probes(ds_json)
+
 
 ################ General Functions ################
 def debug_print(str_to_print):
@@ -185,26 +238,34 @@ def patch_runaiconfig(dcgm_exporter_namespace):
     patch_command = 'kubectl patch RunaiConfig runai -n runai -p \'{"spec": {"global": {"nvidiaDcgmExporter": {"namespace": "%s", "installedFromGpuOperator": false}}}}\' --type="merge"' % (dcgm_exporter_namespace, )
     exec_string_command(patch_command)
 
+################ main ################
 def parse_args():
     if len(sys.argv) < 3:
         exit('Please provide the runai-version and dcgm-exporter namespace as arguments for the script, for example:\n'+
         '"python3 gke_patches.py 2.4 <DCGM_NAMESPACE>"')
 
-    version = sys.argv[1]
-    if version not in ['2.4', '2.5']:
-        exit('Valid versions are: 2.4 or 2.5. For example:\n"python3 gke_patches.py 2.4 <DCGM_NAMESPACE>"')
+    version_arg = sys.argv[1]
+    try:
+        version = float(version_arg)
+    except ValueError:
+        version = 0
+
+    if version < 2.4:
+        exit('Valid versions are: 2.4, 2.5..., for example:\n"python3 gke_patches.py 2.4 <DCGM_NAMESPACE>"')
 
     dcgm_exporter_namespace = sys.argv[2]
     return version, dcgm_exporter_namespace
 
-def main():
-    version, dcgm_exporter_namespace = parse_args()
-
+def patch_for_gke(version, dcgm_exporter_namespace):
     ds_to_patch = [Gfd(version), Nfd(version), DcgmExporter(dcgm_exporter_namespace)]
     for ds in ds_to_patch:
         ds.patch()
 
     patch_runaiconfig(dcgm_exporter_namespace)
+
+def main():
+    version, dcgm_exporter_namespace = parse_args()
+    patch_for_gke(version, dcgm_exporter_namespace)
 
 if __name__ == "__main__":
     main()
