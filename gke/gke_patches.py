@@ -71,6 +71,7 @@ class DcgmExporter(PatchingDs):
 
     def edit_ds_json(self, ds_json):
         add_nvidia_volumes_if_needed(ds_json)
+        edit_probes(ds_json)
 
 ################ General Functions ################
 def debug_print(str_to_print):
@@ -164,7 +165,19 @@ def add_gpu_toleration_if_needed(ds_json):
 
     add_gpu_toleration(ds_json)
 
+def edit_probe(ds_json, probe_name):
+    debug_print('Editing {} for ds'.format(probe_name))
+    probe = ds_json['spec']['template']['spec']['containers'][0].get(probe_name)
+    if not probe:
+        ds_json['spec']['template']['spec']['containers'][0][probe_name] = {}
 
+    ds_json['spec']['template']['spec']['containers'][0][probe_name]['failureThreshold'] = 20
+    ds_json['spec']['template']['spec']['containers'][0][probe_name]['initialDelaySeconds'] = 120
+    ds_json['spec']['template']['spec']['containers'][0][probe_name]['periodSeconds'] = 30
+
+def edit_probes(ds_json):
+    edit_probe(ds_json, 'livenessProbe')
+    edit_probe(ds_json, 'readinessProbe')
 
 ################ runaiconfig ################
 def patch_runaiconfig(dcgm_exporter_namespace):
