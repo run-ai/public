@@ -81,6 +81,7 @@ class Gfd(PatchingDs):
     def edit_ds_json(self, ds_json):
         add_nvidia_volumes_if_needed(ds_json)
         remove_priority_class(ds_json)
+        add_gpu_toleration_if_needed(ds_json)
 
 
 class Nfd(PatchingDs):
