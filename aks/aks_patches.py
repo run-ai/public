@@ -203,7 +203,7 @@ def patch_runaiconfig():
 
 ################ main ################
 def patch_for_gke():
-    ds_to_patch = [Gfd()], Nfd(), DcgmExporter()]
+    ds_to_patch = [Gfd(), Nfd(), DcgmExporter()]
     for ds in ds_to_patch:
         ds.patch()
 

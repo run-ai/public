@@ -28,7 +28,7 @@ def install_gfd_if_needed(version):
 def parse_args():
     if len(sys.argv) < 2:
         exit('Please provide the runai-version as an argument for the script, for example:\n'+
-        '"python3 pre_runai_script.py 2.4"')
+        '"python3 pre_runai_script.py 2.5"')
 
     version_arg = sys.argv[1]
     try:
