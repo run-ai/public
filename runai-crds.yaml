@@ -994,32 +994,6 @@ spec:
                     format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
                     type: string
                 type: object
-              gpuLimit:
-                description: Specifies limitations on the GPUs to allocate for this
-                  workload (1G, 20M, .etc). Intended to use for Opportunistic jobs
-                  (with the smart node-scheduler).
-                properties:
-                  rules:
-                    properties:
-                      canEdit:
-                        default: true
-                        type: boolean
-                      max:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                      min:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                      required:
-                        type: boolean
-                      step:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                    type: object
-                  value:
-                    format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                    type: string
-                type: object
               gpuMemory:
                 description: Specifies GPU memory to allocate for the created workload.
                   The workload will receive this amount of memory. Note that the workload
@@ -1681,38 +1655,6 @@ spec:
                           required:
                             type: boolean
                         type: object
-                      protocol:
-                        properties:
-                          canEdit:
-                            default: true
-                            type: boolean
-                          format:
-                            enum:
-                            - envVar
-                            - password
-                            - email
-                            - volume
-                            - kubeName
-                            - name
-                            - duration
-                            - memory
-                            - imageName
-                            - gpuMemory
-                            type: string
-                          options:
-                            items:
-                              properties:
-                                disabled:
-                                  type: boolean
-                                name:
-                                  type: string
-                                value:
-                                  type: string
-                              type: object
-                            type: array
-                          required:
-                            type: boolean
-                        type: object
                     type: object
                   items:
                     additionalProperties:
@@ -1743,8 +1685,6 @@ spec:
                               type: integer
                             external:
                               type: integer
-                            protocol:
-                              type: string
                           required:
                           - container
                           type: object
@@ -3968,32 +3908,6 @@ spec:
                     format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
                     type: string
                 type: object
-              gpuLimit:
-                description: Specifies limitations on the GPUs to allocate for this
-                  workload (1G, 20M, .etc). Intended to use for Opportunistic jobs
-                  (with the smart node-scheduler).
-                properties:
-                  rules:
-                    properties:
-                      canEdit:
-                        default: true
-                        type: boolean
-                      max:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                      min:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                      required:
-                        type: boolean
-                      step:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                    type: object
-                  value:
-                    format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                    type: string
-                type: object
               gpuMemory:
                 description: Specifies GPU memory to allocate for the created workload.
                   The workload will receive this amount of memory. Note that the workload
@@ -4655,38 +4569,6 @@ spec:
                           required:
                             type: boolean
                         type: object
-                      protocol:
-                        properties:
-                          canEdit:
-                            default: true
-                            type: boolean
-                          format:
-                            enum:
-                            - envVar
-                            - password
-                            - email
-                            - volume
-                            - kubeName
-                            - name
-                            - duration
-                            - memory
-                            - imageName
-                            - gpuMemory
-                            type: string
-                          options:
-                            items:
-                              properties:
-                                disabled:
-                                  type: boolean
-                                name:
-                                  type: string
-                                value:
-                                  type: string
-                              type: object
-                            type: array
-                          required:
-                            type: boolean
-                        type: object
                     type: object
                   items:
                     additionalProperties:
@@ -4717,8 +4599,6 @@ spec:
                               type: integer
                             external:
                               type: integer
-                            protocol:
-                              type: string
                           required:
                           - container
                           type: object
@@ -6206,15 +6086,6 @@ spec:
                     format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
                     type: string
                 type: object
-              gpuLimit:
-                description: Specifies limitations on the GPUs to allocate for this
-                  workload (1G, 20M, .etc). Intended to use for Opportunistic jobs
-                  (with the smart node-scheduler).
-                properties:
-                  value:
-                    format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                    type: string
-                type: object
               gpuMemory:
                 description: Specifies GPU memory to allocate for the created workload.
                   The workload will receive this amount of memory. Note that the workload
@@ -6379,8 +6250,6 @@ spec:
                               type: integer
                             external:
                               type: integer
-                            protocol:
-                              type: string
                           required:
                           - container
                           type: object
@@ -6912,15 +6781,6 @@ spec:
                         format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
                         type: string
                     type: object
-                  gpuLimit:
-                    description: Specifies limitations on the GPUs to allocate for
-                      this workload (1G, 20M, .etc). Intended to use for Opportunistic
-                      jobs (with the smart node-scheduler).
-                    properties:
-                      value:
-                        format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                    type: object
                   gpuMemory:
                     description: Specifies GPU memory to allocate for the created
                       workload. The workload will receive this amount of memory. Note
@@ -7106,8 +6966,6 @@ spec:
                                   type: integer
                                 external:
                                   type: integer
-                                protocol:
-                                  type: string
                               required:
                               - container
                               type: object
@@ -8416,32 +8274,6 @@ spec:
                     format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
                     type: string
                 type: object
-              gpuLimit:
-                description: Specifies limitations on the GPUs to allocate for this
-                  workload (1G, 20M, .etc). Intended to use for Opportunistic jobs
-                  (with the smart node-scheduler).
-                properties:
-                  rules:
-                    properties:
-                      canEdit:
-                        default: true
-                        type: boolean
-                      max:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                      min:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                      required:
-                        type: boolean
-                      step:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                    type: object
-                  value:
-                    format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                    type: string
-                type: object
               gpuMemory:
                 description: Specifies GPU memory to allocate for the created workload.
                   The workload will receive this amount of memory. Note that the workload
@@ -9103,38 +8935,6 @@ spec:
                           required:
                             type: boolean
                         type: object
-                      protocol:
-                        properties:
-                          canEdit:
-                            default: true
-                            type: boolean
-                          format:
-                            enum:
-                            - envVar
-                            - password
-                            - email
-                            - volume
-                            - kubeName
-                            - name
-                            - duration
-                            - memory
-                            - imageName
-                            - gpuMemory
-                            type: string
-                          options:
-                            items:
-                              properties:
-                                disabled:
-                                  type: boolean
-                                name:
-                                  type: string
-                                value:
-                                  type: string
-                              type: object
-                            type: array
-                          required:
-                            type: boolean
-                        type: object
                     type: object
                   items:
                     additionalProperties:
@@ -9165,8 +8965,6 @@ spec:
                               type: integer
                             external:
                               type: integer
-                            protocol:
-                              type: string
                           required:
                           - container
                           type: object
@@ -11426,32 +11224,6 @@ spec:
                         format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
                         type: string
                     type: object
-                  gpuLimit:
-                    description: Specifies limitations on the GPUs to allocate for
-                      this workload (1G, 20M, .etc). Intended to use for Opportunistic
-                      jobs (with the smart node-scheduler).
-                    properties:
-                      rules:
-                        properties:
-                          canEdit:
-                            default: true
-                            type: boolean
-                          max:
-                            pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                            type: string
-                          min:
-                            pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                            type: string
-                          required:
-                            type: boolean
-                          step:
-                            pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                            type: string
-                        type: object
-                      value:
-                        format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                    type: object
                   gpuMemory:
                     description: Specifies GPU memory to allocate for the created
                       workload. The workload will receive this amount of memory. Note
@@ -12174,38 +11946,6 @@ spec:
                               required:
                                 type: boolean
                             type: object
-                          protocol:
-                            properties:
-                              canEdit:
-                                default: true
-                                type: boolean
-                              format:
-                                enum:
-                                - envVar
-                                - password
-                                - email
-                                - volume
-                                - kubeName
-                                - name
-                                - duration
-                                - memory
-                                - imageName
-                                - gpuMemory
-                                type: string
-                              options:
-                                items:
-                                  properties:
-                                    disabled:
-                                      type: boolean
-                                    name:
-                                      type: string
-                                    value:
-                                      type: string
-                                  type: object
-                                type: array
-                              required:
-                                type: boolean
-                            type: object
                         type: object
                       items:
                         additionalProperties:
@@ -12236,8 +11976,6 @@ spec:
                                   type: integer
                                 external:
                                   type: integer
-                                protocol:
-                                  type: string
                               required:
                               - container
                               type: object
@@ -14519,32 +14257,6 @@ spec:
                     format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
                     type: string
                 type: object
-              gpuLimit:
-                description: Specifies limitations on the GPUs to allocate for this
-                  workload (1G, 20M, .etc). Intended to use for Opportunistic jobs
-                  (with the smart node-scheduler).
-                properties:
-                  rules:
-                    properties:
-                      canEdit:
-                        default: true
-                        type: boolean
-                      max:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                      min:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                      required:
-                        type: boolean
-                      step:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                    type: object
-                  value:
-                    format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                    type: string
-                type: object
               gpuMemory:
                 description: Specifies GPU memory to allocate for the created workload.
                   The workload will receive this amount of memory. Note that the workload
@@ -15248,38 +14960,6 @@ spec:
                           required:
                             type: boolean
                         type: object
-                      protocol:
-                        properties:
-                          canEdit:
-                            default: true
-                            type: boolean
-                          format:
-                            enum:
-                            - envVar
-                            - password
-                            - email
-                            - volume
-                            - kubeName
-                            - name
-                            - duration
-                            - memory
-                            - imageName
-                            - gpuMemory
-                            type: string
-                          options:
-                            items:
-                              properties:
-                                disabled:
-                                  type: boolean
-                                name:
-                                  type: string
-                                value:
-                                  type: string
-                              type: object
-                            type: array
-                          required:
-                            type: boolean
-                        type: object
                     type: object
                   items:
                     additionalProperties:
@@ -15310,8 +14990,6 @@ spec:
                               type: integer
                             external:
                               type: integer
-                            protocol:
-                              type: string
                           required:
                           - container
                           type: object
@@ -17459,32 +17137,6 @@ spec:
                     format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
                     type: string
                 type: object
-              gpuLimit:
-                description: Specifies limitations on the GPUs to allocate for this
-                  workload (1G, 20M, .etc). Intended to use for Opportunistic jobs
-                  (with the smart node-scheduler).
-                properties:
-                  rules:
-                    properties:
-                      canEdit:
-                        default: true
-                        type: boolean
-                      max:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                      min:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                      required:
-                        type: boolean
-                      step:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                    type: object
-                  value:
-                    format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                    type: string
-                type: object
               gpuMemory:
                 description: Specifies GPU memory to allocate for the created workload.
                   The workload will receive this amount of memory. Note that the workload
@@ -17675,21 +17327,6 @@ spec:
                     type: object
                   value:
                     type: string
-                type: object
-              isPrivateServiceUrl:
-                description: Configure the inference service to be available only
-                  on the cluster-local network, and not on the public internet
-                properties:
-                  rules:
-                    properties:
-                      canEdit:
-                        default: true
-                        type: boolean
-                      required:
-                        type: boolean
-                    type: object
-                  value:
-                    type: boolean
                 type: object
               labels:
                 description: Specifies labels to be set in the container running the
@@ -18243,38 +17880,6 @@ spec:
                           required:
                             type: boolean
                         type: object
-                      protocol:
-                        properties:
-                          canEdit:
-                            default: true
-                            type: boolean
-                          format:
-                            enum:
-                            - envVar
-                            - password
-                            - email
-                            - volume
-                            - kubeName
-                            - name
-                            - duration
-                            - memory
-                            - imageName
-                            - gpuMemory
-                            type: string
-                          options:
-                            items:
-                              properties:
-                                disabled:
-                                  type: boolean
-                                name:
-                                  type: string
-                                value:
-                                  type: string
-                              type: object
-                            type: array
-                          required:
-                            type: boolean
-                        type: object
                     type: object
                   items:
                     additionalProperties:
@@ -18305,8 +17910,6 @@ spec:
                               type: integer
                             external:
                               type: integer
-                            protocol:
-                              type: string
                           required:
                           - container
                           type: object
@@ -19707,15 +19310,6 @@ spec:
                     format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
                     type: string
                 type: object
-              gpuLimit:
-                description: Specifies limitations on the GPUs to allocate for this
-                  workload (1G, 20M, .etc). Intended to use for Opportunistic jobs
-                  (with the smart node-scheduler).
-                properties:
-                  value:
-                    format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                    type: string
-                type: object
               gpuMemory:
                 description: Specifies GPU memory to allocate for the created workload.
                   The workload will receive this amount of memory. Note that the workload
@@ -19882,8 +19476,6 @@ spec:
                               type: integer
                             external:
                               type: integer
-                            protocol:
-                              type: string
                           required:
                           - container
                           type: object
@@ -20365,15 +19957,6 @@ spec:
                         format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
                         type: string
                     type: object
-                  gpuLimit:
-                    description: Specifies limitations on the GPUs to allocate for
-                      this workload (1G, 20M, .etc). Intended to use for Opportunistic
-                      jobs (with the smart node-scheduler).
-                    properties:
-                      value:
-                        format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                    type: object
                   gpuMemory:
                     description: Specifies GPU memory to allocate for the created
                       workload. The workload will receive this amount of memory. Note
@@ -20543,8 +20126,6 @@ spec:
                                   type: integer
                                 external:
                                   type: integer
-                                protocol:
-                                  type: string
                               required:
                               - container
                               type: object
@@ -21805,32 +21386,6 @@ spec:
                     format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
                     type: string
                 type: object
-              gpuLimit:
-                description: Specifies limitations on the GPUs to allocate for this
-                  workload (1G, 20M, .etc). Intended to use for Opportunistic jobs
-                  (with the smart node-scheduler).
-                properties:
-                  rules:
-                    properties:
-                      canEdit:
-                        default: true
-                        type: boolean
-                      max:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                      min:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                      required:
-                        type: boolean
-                      step:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                    type: object
-                  value:
-                    format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                    type: string
-                type: object
               gpuMemory:
                 description: Specifies GPU memory to allocate for the created workload.
                   The workload will receive this amount of memory. Note that the workload
@@ -22021,21 +21576,6 @@ spec:
                     type: object
                   value:
                     type: string
-                type: object
-              isPrivateServiceUrl:
-                description: Configure the inference service to be available only
-                  on the cluster-local network, and not on the public internet
-                properties:
-                  rules:
-                    properties:
-                      canEdit:
-                        default: true
-                        type: boolean
-                      required:
-                        type: boolean
-                    type: object
-                  value:
-                    type: boolean
                 type: object
               labels:
                 description: Specifies labels to be set in the container running the
@@ -22589,38 +22129,6 @@ spec:
                           required:
                             type: boolean
                         type: object
-                      protocol:
-                        properties:
-                          canEdit:
-                            default: true
-                            type: boolean
-                          format:
-                            enum:
-                            - envVar
-                            - password
-                            - email
-                            - volume
-                            - kubeName
-                            - name
-                            - duration
-                            - memory
-                            - imageName
-                            - gpuMemory
-                            type: string
-                          options:
-                            items:
-                              properties:
-                                disabled:
-                                  type: boolean
-                                name:
-                                  type: string
-                                value:
-                                  type: string
-                              type: object
-                            type: array
-                          required:
-                            type: boolean
-                        type: object
                     type: object
                   items:
                     additionalProperties:
@@ -22651,8 +22159,6 @@ spec:
                               type: integer
                             external:
                               type: integer
-                            protocol:
-                              type: string
                           required:
                           - container
                           type: object
@@ -24812,32 +24318,6 @@ spec:
                         format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
                         type: string
                     type: object
-                  gpuLimit:
-                    description: Specifies limitations on the GPUs to allocate for
-                      this workload (1G, 20M, .etc). Intended to use for Opportunistic
-                      jobs (with the smart node-scheduler).
-                    properties:
-                      rules:
-                        properties:
-                          canEdit:
-                            default: true
-                            type: boolean
-                          max:
-                            pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                            type: string
-                          min:
-                            pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                            type: string
-                          required:
-                            type: boolean
-                          step:
-                            pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                            type: string
-                        type: object
-                      value:
-                        format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                    type: object
                   gpuMemory:
                     description: Specifies GPU memory to allocate for the created
                       workload. The workload will receive this amount of memory. Note
@@ -25028,21 +24508,6 @@ spec:
                         type: object
                       value:
                         type: string
-                    type: object
-                  isPrivateServiceUrl:
-                    description: Configure the inference service to be available only
-                      on the cluster-local network, and not on the public internet
-                    properties:
-                      rules:
-                        properties:
-                          canEdit:
-                            default: true
-                            type: boolean
-                          required:
-                            type: boolean
-                        type: object
-                      value:
-                        type: boolean
                     type: object
                   labels:
                     description: Specifies labels to be set in the container running
@@ -25599,38 +25064,6 @@ spec:
                               required:
                                 type: boolean
                             type: object
-                          protocol:
-                            properties:
-                              canEdit:
-                                default: true
-                                type: boolean
-                              format:
-                                enum:
-                                - envVar
-                                - password
-                                - email
-                                - volume
-                                - kubeName
-                                - name
-                                - duration
-                                - memory
-                                - imageName
-                                - gpuMemory
-                                type: string
-                              options:
-                                items:
-                                  properties:
-                                    disabled:
-                                      type: boolean
-                                    name:
-                                      type: string
-                                    value:
-                                      type: string
-                                  type: object
-                                type: array
-                              required:
-                                type: boolean
-                            type: object
                         type: object
                       items:
                         additionalProperties:
@@ -25661,8 +25094,6 @@ spec:
                                   type: integer
                                 external:
                                   type: integer
-                                protocol:
-                                  type: string
                               required:
                               - container
                               type: object
@@ -27823,32 +27254,6 @@ spec:
                     format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
                     type: string
                 type: object
-              gpuLimit:
-                description: Specifies limitations on the GPUs to allocate for this
-                  workload (1G, 20M, .etc). Intended to use for Opportunistic jobs
-                  (with the smart node-scheduler).
-                properties:
-                  rules:
-                    properties:
-                      canEdit:
-                        default: true
-                        type: boolean
-                      max:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                      min:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                      required:
-                        type: boolean
-                      step:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                    type: object
-                  value:
-                    format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                    type: string
-                type: object
               gpuMemory:
                 description: Specifies GPU memory to allocate for the created workload.
                   The workload will receive this amount of memory. Note that the workload
@@ -28541,38 +27946,6 @@ spec:
                           required:
                             type: boolean
                         type: object
-                      protocol:
-                        properties:
-                          canEdit:
-                            default: true
-                            type: boolean
-                          format:
-                            enum:
-                            - envVar
-                            - password
-                            - email
-                            - volume
-                            - kubeName
-                            - name
-                            - duration
-                            - memory
-                            - imageName
-                            - gpuMemory
-                            type: string
-                          options:
-                            items:
-                              properties:
-                                disabled:
-                                  type: boolean
-                                name:
-                                  type: string
-                                value:
-                                  type: string
-                              type: object
-                            type: array
-                          required:
-                            type: boolean
-                        type: object
                     type: object
                   items:
                     additionalProperties:
@@ -28603,8 +27976,6 @@ spec:
                               type: integer
                             external:
                               type: integer
-                            protocol:
-                              type: string
                           required:
                           - container
                           type: object
@@ -30824,32 +30195,6 @@ spec:
                     format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
                     type: string
                 type: object
-              gpuLimit:
-                description: Specifies limitations on the GPUs to allocate for this
-                  workload (1G, 20M, .etc). Intended to use for Opportunistic jobs
-                  (with the smart node-scheduler).
-                properties:
-                  rules:
-                    properties:
-                      canEdit:
-                        default: true
-                        type: boolean
-                      max:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                      min:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                      required:
-                        type: boolean
-                      step:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                    type: object
-                  value:
-                    format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                    type: string
-                type: object
               gpuMemory:
                 description: Specifies GPU memory to allocate for the created workload.
                   The workload will receive this amount of memory. Note that the workload
@@ -31542,38 +30887,6 @@ spec:
                           required:
                             type: boolean
                         type: object
-                      protocol:
-                        properties:
-                          canEdit:
-                            default: true
-                            type: boolean
-                          format:
-                            enum:
-                            - envVar
-                            - password
-                            - email
-                            - volume
-                            - kubeName
-                            - name
-                            - duration
-                            - memory
-                            - imageName
-                            - gpuMemory
-                            type: string
-                          options:
-                            items:
-                              properties:
-                                disabled:
-                                  type: boolean
-                                name:
-                                  type: string
-                                value:
-                                  type: string
-                              type: object
-                            type: array
-                          required:
-                            type: boolean
-                        type: object
                     type: object
                   items:
                     additionalProperties:
@@ -31604,8 +30917,6 @@ spec:
                               type: integer
                             external:
                               type: integer
-                            protocol:
-                              type: string
                           required:
                           - container
                           type: object
@@ -33108,15 +32419,6 @@ spec:
                     format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
                     type: string
                 type: object
-              gpuLimit:
-                description: Specifies limitations on the GPUs to allocate for this
-                  workload (1G, 20M, .etc). Intended to use for Opportunistic jobs
-                  (with the smart node-scheduler).
-                properties:
-                  value:
-                    format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                    type: string
-                type: object
               gpuMemory:
                 description: Specifies GPU memory to allocate for the created workload.
                   The workload will receive this amount of memory. Note that the workload
@@ -33288,8 +32590,6 @@ spec:
                               type: integer
                             external:
                               type: integer
-                            protocol:
-                              type: string
                           required:
                           - container
                           type: object
@@ -33829,15 +33129,6 @@ spec:
                         format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
                         type: string
                     type: object
-                  gpuLimit:
-                    description: Specifies limitations on the GPUs to allocate for
-                      this workload (1G, 20M, .etc). Intended to use for Opportunistic
-                      jobs (with the smart node-scheduler).
-                    properties:
-                      value:
-                        format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                    type: object
                   gpuMemory:
                     description: Specifies GPU memory to allocate for the created
                       workload. The workload will receive this amount of memory. Note
@@ -34023,8 +33314,6 @@ spec:
                                   type: integer
                                 external:
                                   type: integer
-                                protocol:
-                                  type: string
                               required:
                               - container
                               type: object
@@ -35306,32 +34595,6 @@ spec:
                     format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
                     type: string
                 type: object
-              gpuLimit:
-                description: Specifies limitations on the GPUs to allocate for this
-                  workload (1G, 20M, .etc). Intended to use for Opportunistic jobs
-                  (with the smart node-scheduler).
-                properties:
-                  rules:
-                    properties:
-                      canEdit:
-                        default: true
-                        type: boolean
-                      max:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                      min:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                      required:
-                        type: boolean
-                      step:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                    type: object
-                  value:
-                    format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                    type: string
-                type: object
               gpuMemory:
                 description: Specifies GPU memory to allocate for the created workload.
                   The workload will receive this amount of memory. Note that the workload
@@ -36024,38 +35287,6 @@ spec:
                           required:
                             type: boolean
                         type: object
-                      protocol:
-                        properties:
-                          canEdit:
-                            default: true
-                            type: boolean
-                          format:
-                            enum:
-                            - envVar
-                            - password
-                            - email
-                            - volume
-                            - kubeName
-                            - name
-                            - duration
-                            - memory
-                            - imageName
-                            - gpuMemory
-                            type: string
-                          options:
-                            items:
-                              properties:
-                                disabled:
-                                  type: boolean
-                                name:
-                                  type: string
-                                value:
-                                  type: string
-                              type: object
-                            type: array
-                          required:
-                            type: boolean
-                        type: object
                     type: object
                   items:
                     additionalProperties:
@@ -36086,8 +35317,6 @@ spec:
                               type: integer
                             external:
                               type: integer
-                            protocol:
-                              type: string
                           required:
                           - container
                           type: object
@@ -38371,32 +37600,6 @@ spec:
                         format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
                         type: string
                     type: object
-                  gpuLimit:
-                    description: Specifies limitations on the GPUs to allocate for
-                      this workload (1G, 20M, .etc). Intended to use for Opportunistic
-                      jobs (with the smart node-scheduler).
-                    properties:
-                      rules:
-                        properties:
-                          canEdit:
-                            default: true
-                            type: boolean
-                          max:
-                            pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                            type: string
-                          min:
-                            pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                            type: string
-                          required:
-                            type: boolean
-                          step:
-                            pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                            type: string
-                        type: object
-                      value:
-                        format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                    type: object
                   gpuMemory:
                     description: Specifies GPU memory to allocate for the created
                       workload. The workload will receive this amount of memory. Note
@@ -39119,38 +38322,6 @@ spec:
                               required:
                                 type: boolean
                             type: object
-                          protocol:
-                            properties:
-                              canEdit:
-                                default: true
-                                type: boolean
-                              format:
-                                enum:
-                                - envVar
-                                - password
-                                - email
-                                - volume
-                                - kubeName
-                                - name
-                                - duration
-                                - memory
-                                - imageName
-                                - gpuMemory
-                                type: string
-                              options:
-                                items:
-                                  properties:
-                                    disabled:
-                                      type: boolean
-                                    name:
-                                      type: string
-                                    value:
-                                      type: string
-                                  type: object
-                                type: array
-                              required:
-                                type: boolean
-                            type: object
                         type: object
                       items:
                         additionalProperties:
@@ -39181,8 +38352,6 @@ spec:
                                   type: integer
                                 external:
                                   type: integer
-                                protocol:
-                                  type: string
                               required:
                               - container
                               type: object
@@ -41531,32 +40700,6 @@ spec:
                     format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
                     type: string
                 type: object
-              gpuLimit:
-                description: Specifies limitations on the GPUs to allocate for this
-                  workload (1G, 20M, .etc). Intended to use for Opportunistic jobs
-                  (with the smart node-scheduler).
-                properties:
-                  rules:
-                    properties:
-                      canEdit:
-                        default: true
-                        type: boolean
-                      max:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                      min:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                      required:
-                        type: boolean
-                      step:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                    type: object
-                  value:
-                    format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                    type: string
-                type: object
               gpuMemory:
                 description: Specifies GPU memory to allocate for the created workload.
                   The workload will receive this amount of memory. Note that the workload
@@ -42218,38 +41361,6 @@ spec:
                           required:
                             type: boolean
                         type: object
-                      protocol:
-                        properties:
-                          canEdit:
-                            default: true
-                            type: boolean
-                          format:
-                            enum:
-                            - envVar
-                            - password
-                            - email
-                            - volume
-                            - kubeName
-                            - name
-                            - duration
-                            - memory
-                            - imageName
-                            - gpuMemory
-                            type: string
-                          options:
-                            items:
-                              properties:
-                                disabled:
-                                  type: boolean
-                                name:
-                                  type: string
-                                value:
-                                  type: string
-                              type: object
-                            type: array
-                          required:
-                            type: boolean
-                        type: object
                     type: object
                   items:
                     additionalProperties:
@@ -42280,8 +41391,6 @@ spec:
                               type: integer
                             external:
                               type: integer
-                            protocol:
-                              type: string
                           required:
                           - container
                           type: object
@@ -44527,32 +43636,6 @@ spec:
                     format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
                     type: string
                 type: object
-              gpuLimit:
-                description: Specifies limitations on the GPUs to allocate for this
-                  workload (1G, 20M, .etc). Intended to use for Opportunistic jobs
-                  (with the smart node-scheduler).
-                properties:
-                  rules:
-                    properties:
-                      canEdit:
-                        default: true
-                        type: boolean
-                      max:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                      min:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                      required:
-                        type: boolean
-                      step:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                    type: object
-                  value:
-                    format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                    type: string
-                type: object
               gpuMemory:
                 description: Specifies GPU memory to allocate for the created workload.
                   The workload will receive this amount of memory. Note that the workload
@@ -45214,38 +44297,6 @@ spec:
                           required:
                             type: boolean
                         type: object
-                      protocol:
-                        properties:
-                          canEdit:
-                            default: true
-                            type: boolean
-                          format:
-                            enum:
-                            - envVar
-                            - password
-                            - email
-                            - volume
-                            - kubeName
-                            - name
-                            - duration
-                            - memory
-                            - imageName
-                            - gpuMemory
-                            type: string
-                          options:
-                            items:
-                              properties:
-                                disabled:
-                                  type: boolean
-                                name:
-                                  type: string
-                                value:
-                                  type: string
-                              type: object
-                            type: array
-                          required:
-                            type: boolean
-                        type: object
                     type: object
                   items:
                     additionalProperties:
@@ -45276,8 +44327,6 @@ spec:
                               type: integer
                             external:
                               type: integer
-                            protocol:
-                              type: string
                           required:
                           - container
                           type: object
@@ -46774,15 +45823,6 @@ spec:
                     format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
                     type: string
                 type: object
-              gpuLimit:
-                description: Specifies limitations on the GPUs to allocate for this
-                  workload (1G, 20M, .etc). Intended to use for Opportunistic jobs
-                  (with the smart node-scheduler).
-                properties:
-                  value:
-                    format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                    type: string
-                type: object
               gpuMemory:
                 description: Specifies GPU memory to allocate for the created workload.
                   The workload will receive this amount of memory. Note that the workload
@@ -46947,8 +45987,6 @@ spec:
                               type: integer
                             external:
                               type: integer
-                            protocol:
-                              type: string
                           required:
                           - container
                           type: object
@@ -47480,15 +46518,6 @@ spec:
                         format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
                         type: string
                     type: object
-                  gpuLimit:
-                    description: Specifies limitations on the GPUs to allocate for
-                      this workload (1G, 20M, .etc). Intended to use for Opportunistic
-                      jobs (with the smart node-scheduler).
-                    properties:
-                      value:
-                        format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                    type: object
                   gpuMemory:
                     description: Specifies GPU memory to allocate for the created
                       workload. The workload will receive this amount of memory. Note
@@ -47674,8 +46703,6 @@ spec:
                                   type: integer
                                 external:
                                   type: integer
-                                protocol:
-                                  type: string
                               required:
                               - container
                               type: object
@@ -49007,32 +48034,6 @@ spec:
                     format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
                     type: string
                 type: object
-              gpuLimit:
-                description: Specifies limitations on the GPUs to allocate for this
-                  workload (1G, 20M, .etc). Intended to use for Opportunistic jobs
-                  (with the smart node-scheduler).
-                properties:
-                  rules:
-                    properties:
-                      canEdit:
-                        default: true
-                        type: boolean
-                      max:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                      min:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                      required:
-                        type: boolean
-                      step:
-                        pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                    type: object
-                  value:
-                    format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                    type: string
-                type: object
               gpuMemory:
                 description: Specifies GPU memory to allocate for the created workload.
                   The workload will receive this amount of memory. Note that the workload
@@ -49694,38 +48695,6 @@ spec:
                           required:
                             type: boolean
                         type: object
-                      protocol:
-                        properties:
-                          canEdit:
-                            default: true
-                            type: boolean
-                          format:
-                            enum:
-                            - envVar
-                            - password
-                            - email
-                            - volume
-                            - kubeName
-                            - name
-                            - duration
-                            - memory
-                            - imageName
-                            - gpuMemory
-                            type: string
-                          options:
-                            items:
-                              properties:
-                                disabled:
-                                  type: boolean
-                                name:
-                                  type: string
-                                value:
-                                  type: string
-                              type: object
-                            type: array
-                          required:
-                            type: boolean
-                        type: object
                     type: object
                   items:
                     additionalProperties:
@@ -49756,8 +48725,6 @@ spec:
                               type: integer
                             external:
                               type: integer
-                            protocol:
-                              type: string
                           required:
                           - container
                           type: object
@@ -52017,32 +50984,6 @@ spec:
                         format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
                         type: string
                     type: object
-                  gpuLimit:
-                    description: Specifies limitations on the GPUs to allocate for
-                      this workload (1G, 20M, .etc). Intended to use for Opportunistic
-                      jobs (with the smart node-scheduler).
-                    properties:
-                      rules:
-                        properties:
-                          canEdit:
-                            default: true
-                            type: boolean
-                          max:
-                            pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                            type: string
-                          min:
-                            pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                            type: string
-                          required:
-                            type: boolean
-                          step:
-                            pattern: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                            type: string
-                        type: object
-                      value:
-                        format: ^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$
-                        type: string
-                    type: object
                   gpuMemory:
                     description: Specifies GPU memory to allocate for the created
                       workload. The workload will receive this amount of memory. Note
@@ -52765,38 +51706,6 @@ spec:
                               required:
                                 type: boolean
                             type: object
-                          protocol:
-                            properties:
-                              canEdit:
-                                default: true
-                                type: boolean
-                              format:
-                                enum:
-                                - envVar
-                                - password
-                                - email
-                                - volume
-                                - kubeName
-                                - name
-                                - duration
-                                - memory
-                                - imageName
-                                - gpuMemory
-                                type: string
-                              options:
-                                items:
-                                  properties:
-                                    disabled:
-                                      type: boolean
-                                    name:
-                                      type: string
-                                    value:
-                                      type: string
-                                  type: object
-                                type: array
-                              required:
-                                type: boolean
-                            type: object
                         type: object
                       items:
                         additionalProperties:
@@ -52827,8 +51736,6 @@ spec:
                                   type: integer
                                 external:
                                   type: integer
-                                protocol:
-                                  type: string
                               required:
                               - container
                               type: object
